@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CowsApp - Catálogo de Razas</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+</head>
+<body class="d-flex flex-column min-vh-100 bg-dark text-light">
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-info border-2">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="../../static/img/logo.png" class="img-fluid rounded-circle" width="50" height="50" th:src="@{/img/logo.png}" alt="Logo CowsApp">
+            </a>
+            <span class="navbar-text mx-auto fs-4 fw-bold text-info">CowsApp</span>
+            <div class="dropdown">
+                <button class="btn btn-outline-info d-flex align-items-center" type="button" id="menuDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-list"></i>Menú
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="menuDropdown">
+                    <li><a class="dropdown-item d-flex align-items-center" th:href="@{/vacas}"><i class="bi bi-list text-success me-2"></i>Vacas</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item d-flex align-items-center" th:href="@{/razas}"><i class="bi bi-list text-info me-2"></i>Razas</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="container flex-grow-1 py-5">
+        <h1 class="text-center mb-5 text-info">Catálogo de Razas</h1>
+
+        <div class="row g-4 justify-content-center">
+            <!-- Iterar razas -->
+            <div class="col-12 col-md-6 col-lg-4" th:each="raza : ${TodasRazas}">
+                <div class="card bg-light border-info border-2 text-dark shadow h-100">
+                    <div class="card-body text-center d-flex flex-column p-4">
+                        <h5 class="card-title mb-3" th:text="${raza.nombre}">Nombre de la Raza</h5> 
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="dropdown text-end mb-4 m-25">
+            <button type="button" id="opcButton" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-three-dots"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="opcButton">
+                <li>
+                    <a class="dropdown-item cursor-pointer" th:href="@{/razas/nuevo}">
+                        <i class="bi bi-plus-lg"></i> Añadir Raza
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item cursor-pointer" th:href="@{/razas/eliminar}">
+                        <i class="bi bi-trash"></i> Eliminar Raza
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark text-light text-center py-3 border-top border-info border-2 mt-auto">
+        <div class="container">
+            <span class="small">© 2025 CowsApp - Todos los derechos reservados</span>
+            <div class="mt-2">
+                <a href="#" class="text-info fs-5 mx-2" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="text-info fs-5 mx-2" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+                <a href="#" class="text-info fs-5 mx-2" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

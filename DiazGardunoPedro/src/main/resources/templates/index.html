@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CowsApp - Gestión Ganadera</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    </head>
+<body class="d-flex flex-column min-vh-100 bg-dark text-light">
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-success border-2">
+            <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="../static/img/logo.png"   class="img-fluid rounded-circle" width="50" height="50" th:src="@{/img/logo.png}" alt="Logo CowsApp"  >
+            </a>
+            <span class="navbar-text mx-auto fs-4 fw-bold text-success">CowsApp</span>
+            <div class="dropdown">
+                <button class="btn btn-outline-success d-flex align-items-center" type="button" id="menuDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-list"></i>Menú
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="menuDropdown">
+                <li><a class="dropdown-item d-flex align-items-center" th:href="@{/vacas}"><i class="bi bi-list text-success me-2"></i>Vacas</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item d-flex align-items-center" th:href="@{/razas}"><i class="bi bi-list text-info me-2"></i>Razas</a></li>
+                </ul>
+            </div>
+            </div>
+        </nav>
+
+        <main class="container flex-grow-1 d-flex justify-content-center align-items-center py-5">
+            <div class="row g-4 justify-content-center w-100">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card bg-light border-success border-2 text-dark shadow h-100">
+                <div class="card-body text-center d-flex flex-column p-4">
+                    <i class="bi bi-list display-4 text-success mb-3"></i>
+                    <h5 class="card-title mb-3">Gestión de Vacas</h5>
+                    <p class="card-text mb-4 flex-grow-1">Listado e información de las Vacas</p>
+                    <a  th:href="@{/vacas}" class="btn btn-success btn-lg">Ingresar</a>
+                </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card bg-light border-info border-2 text-dark shadow h-100">
+                <div class="card-body text-center d-flex flex-column p-4">
+                    <i class="bi bi-list display-4 text-info mb-3"></i>
+                    <h5 class="card-title mb-3">Catálogo de Razas</h5>
+                    <p class="card-text mb-4 flex-grow-1">Lista e información de las razas</p>
+                    <a href="../templates/razas/listado.html" th:href="@{templates/razas/listado.html}" class="btn btn-info btn-lg">Explorar</a>
+                </div>
+                </div>
+            </div>
+            </div>
+        </main>
+
+        <footer class="bg-dark text-light text-center py-3 border-top border-success border-2 mt-auto">
+            <div class="container">
+            <span class="small">© 2025 CowsApp - Todos los derechos reservados</span>
+            <div class="mt-2">
+                <a href="#" class="text-success fs-5 mx-2"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="text-info fs-5 mx-2"><i class="bi bi-twitter"></i></a>
+                <a href="#" class="text-danger fs-5 mx-2"><i class="bi bi-instagram"></i></a>
+            </div>
+            </div>
+        </footer>
+
+
+
+    </body>
+</html>
