@@ -7,65 +7,194 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    </head>
-<body class="d-flex flex-column min-vh-100 bg-dark text-light">
+</head>
+<body class="bg-light">
 
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-success border-2">
-            <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="#">
-                <img src="../static/img/logo.png"   class="img-fluid rounded-circle" width="50" height="50" th:src="@{/img/logo.png}" alt="Logo CowsApp"  >
-            </a>
-            <span class="navbar-text mx-auto fs-4 fw-bold text-success">CowsApp</span>
-            <div class="dropdown">
-                <button class="btn btn-outline-success d-flex align-items-center" type="button" id="menuDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi bi-list"></i>Menú
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="menuDropdown">
-                <li><a class="dropdown-item d-flex align-items-center" th:href="@{/vacas}"><i class="bi bi-list text-success me-2"></i>Vacas</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item d-flex align-items-center" th:href="@{/razas}"><i class="bi bi-list text-info me-2"></i>Razas</a></li>
+
+    <header class="bg-success bg-gradient py-5 shadow">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-center mb-4">
+                <img src="../static/img/logo.png" 
+                    class="rounded-circle me-4 border bg-white border-4 border-white" 
+                    width="100" height="100" 
+                    th:src="@{/img/logo.png}" 
+                    alt="Logo">
+                <div>
+                    <h1 class="display-4 fw-bold text-white mb-2">CowsApp</h1>
+                    <p class="lead text-light mb-0">Gestión Inteligente de Ganado Bovino</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm">
+        <div class="container">
+            <div class="d-flex justify-content-center w-100">
+                <ul class="nav nav-pills nav-fill gap-3">
+                    <li class="nav-item">
+                        <a class="nav-link btn-lg text-white bg-success active" 
+                        th:href="@{/vacas}">
+                        <i class="bi bi-clipboard2-pulse me-2"></i>Gestión de Vacas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-lg text-white bg-orange" 
+                        style="background: #FFA500;" 
+                        th:href="@{/razas}">
+                        <i class="bi bi-database me-2"></i>Catálogo de Razas
+                        </a>
+                    </li>
                 </ul>
             </div>
-            </div>
-        </nav>
+        </div>
+    </nav>
 
-        <main class="container flex-grow-1 d-flex justify-content-center align-items-center py-5">
-            <div class="row g-4 justify-content-center w-100">
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card bg-light border-success border-2 text-dark shadow h-100">
-                <div class="card-body text-center d-flex flex-column p-4">
-                    <i class="bi bi-list display-4 text-success mb-3"></i>
-                    <h5 class="card-title mb-3">Gestión de Vacas</h5>
-                    <p class="card-text mb-4 flex-grow-1">Listado e información de las Vacas</p>
-                    <a  th:href="@{/vacas}" class="btn btn-success btn-lg">Ingresar</a>
+
+    <main class="container my-5">
+        <div class="row g-4">
+            
+            
+            <div class="col-lg-8">
+                <div class="card border-success shadow">
+                    <div class="card-header bg-success text-white py-3">
+                        <h2 class="h4 mb-0"><i class="bi bi-lightbulb me-2"></i>Datos Fascinantes</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row row-cols-1 row-cols-md-2 g-4">
+                            
+                        
+                            <div class="col">
+                                <div class="card h-100 border-start border-4 border-info">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <i class="bi bi-cup-hot fs-1 text-info me-3"></i>
+                                            <div>
+                                                <h3 class="h5 mb-1">Producción Lechera (Frisona)</h3>
+                                                <div class="display-6 text-info">30 L/día</div>
+                                                <small class="text-muted">Promedio por vaca</small>
+                                            </div>
+                                        </div>
+                                        <p class="small mb-0">Una vaca frisona produce aproximadamente 200 vasos de leche diarios</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="card h-100 border-start border-4 border-warning">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <i class="bi bi-clock-history fs-1 text-warning me-3"></i>
+                                            <div>
+                                                <h3 class="h5 mb-1">Periodo Gestación</h3>
+                                                <div class="display-6 text-warning">283 días</div>
+                                                <small class="text-muted">Equivalente a 9 meses</small>
+                                            </div>
+                                        </div>
+                                        <p class="small mb-0">Similar al tiempo de gestación humana</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="card h-100 border-start border-4 border-danger">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <i class="bi bi-heart-half fs-1 text-danger me-3"></i>
+                                            <div>
+                                                <h3 class="h5 mb-1">Esperanza de Vida</h3>
+                                                <div class="display-6 text-danger">20 años</div>
+                                                <small class="text-muted">En condiciones óptimas</small>
+                                            </div>
+                                        </div>
+                                        <p class="small mb-0">Algunas razas superan los 25 años</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Consumo  -->
+                            <div class="col">
+                                <div class="card h-100 border-start border-4 border-primary">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <i class="bi bi-droplet fs-1 text-primary me-3"></i>
+                                            <div>
+                                                <h3 class="h5 mb-1">Consumo de Agua</h3>
+                                                <div class="display-6 text-primary">100 L/día</div>
+                                                <small class="text-muted">En época de calor</small>
+                                            </div>
+                                        </div>
+                                        <p class="small mb-0">Equivale a 2 bañeras llenas</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+
+            <!-- Columna de Noticias -->
+            <div class="col-lg-4">
+                <div class="card border-orange shadow">
+                    <div class="card-header bg-orange text-dark py-3">
+                        <h2 class="h4 mb-0"><i class="bi bi-newspaper me-2"></i>Noticias Relevantes</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group list-group-flush">
+                        
+                            <a href="https://fig.zafra.es/" class="list-group-item list-group-item-action">
+                                <div class="d-flex align-items-center mb-2">
+                                    <span class="badge bg-warning me-2">Evento</span>
+                                    <small class="text-muted">Octubre 2025</small>
+                                </div>
+                                <h5 class="h6 mb-1">Exposición de todo tipo de ganado</h5>
+                                <p class="text-muted small mb-0">Próxima feria internacional ganadera de Zfra</p>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card bg-light border-info border-2 text-dark shadow h-100">
-                <div class="card-body text-center d-flex flex-column p-4">
-                    <i class="bi bi-list display-4 text-info mb-3"></i>
-                    <h5 class="card-title mb-3">Catálogo de Razas</h5>
-                    <p class="card-text mb-4 flex-grow-1">Lista e información de las razas</p>
-                    <a href="../templates/razas/listado.html" th:href="@{templates/razas/listado.html}" class="btn btn-info btn-lg">Explorar</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white mt-5">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5 class="text-success mb-3">Contacto</h5>
+                    <ul class="list-unstyled">
+                
+                        <li>
+                            <i class="bi bi-envelope text-success me-2"></i>
+                            diaz.gaped24@triana.salesianos.edu
+                        </li>
+                    </ul>
                 </div>
+            
+                <div class="col-md-4">
+                    <h5 class="text-success mb-3">Redes Sociales</h5>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="btn btn-success btn-sm rounded-circle p-2">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                        <a href="#" class="btn btn-success btn-sm rounded-circle p-2">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                        <a href="#" class="btn btn-success btn-sm rounded-circle p-2">
+                            <i class="bi bi-youtube"></i>
+                        </a>
+                    </div>
                 </div>
-            </div>
-            </div>
-        </main>
+                <div class="col-md-4">
+                    <h5 class="text-success mb-3">Sobre Nosotros</h5>
+                    <p class="small">CowsApp es una plataforma innovadora diseñada para facilitar la gestión del ganado bovino, optimizando procesos y mejorando la productividad.</p>
 
-        <footer class="bg-dark text-light text-center py-3 border-top border-success border-2 mt-auto">
-            <div class="container">
-            <span class="small">© 2025 CowsApp - Todos los derechos reservados</span>
-            <div class="mt-2">
-                <a href="#" class="text-success fs-5 mx-2"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="text-info fs-5 mx-2"><i class="bi bi-twitter"></i></a>
-                <a href="#" class="text-danger fs-5 mx-2"><i class="bi bi-instagram"></i></a>
             </div>
-            </div>
-        </footer>
+            <hr class="border-success my-4">
+            <p class="text-center mb-0 small">&copy; 2025 CowsApp - Revolucionando la gestión ganadera</p>
+        </div>
+    </footer>
 
-
-
-    </body>
+</body>
 </html>

@@ -19,7 +19,7 @@ public class RazaController {
 
 
 	@Autowired
-	private RazaService razaService;
+	private  RazaService razaService;
 	
 	
 	@GetMapping ("")

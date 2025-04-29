@@ -3,6 +3,7 @@ package com.salesianostriana.dam.DiazGardunoPedro.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.salesianostriana.dam.DiazGardunoPedro.model.Raza;
@@ -14,7 +15,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class RazaService {
 
-	private final RazaRepository razaRepository ;
+	
+	private final RazaRepository razaRepository;
 	
 	public List<Raza> getListRaza(){
 		

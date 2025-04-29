@@ -13,15 +13,18 @@ import lombok.NoArgsConstructor;
 
 @Entity
 
-@Data
+
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class Raza {
 
 	@Id
 	@GeneratedValue
 	private long id;
 	private String nombre;
+	
+
 	@OneToMany (mappedBy = "raza")
 	private List<Vaca>listVacas;
 	
