@@ -36,9 +36,8 @@
         }
     </style>
 </head>
-<body class="bg-light">
-
-    <!-- Header -->
+<body class="bg-light d-flex flex-column min-vh-100">
+    
     <header class="bg-success bg-gradient py-5 shadow">
         <div class="container">
             <div class="d-flex align-items-center justify-content-center mb-4">
@@ -47,14 +46,14 @@
                     th:src="@{/img/logo.png}" 
                     alt="Logo CowsApp">
                 <div>
-                    <h1 class="display-4 fw-bold text-white mb-2">CowsApp</h1>
+                    <h1 class="display-4 fw-bold text-white mb-2"><a th:href="@{/}" class=" link-light link-underline link-underline-opacity-0">CowsApp</a> </h1>
                     <p class="lead text-light mb-0">Gestión de Razas Bovinas</p>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Navegación -->
+
     <nav class="navbar navbar-expand-lg bg-white shadow-sm">
         <div class="container">
             <div class="d-flex justify-content-center w-100">
@@ -77,8 +76,9 @@
         </div>
     </nav>
 
-    <!-- Contenido Principal -->
-    <main class="container my-5">
+
+    <main class="container my-5 flex-grow-1">
+
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="h3 text-success"><i class="bi bi-database me-2"></i>Razas Registradas</h2>
             <div class="dropdown">
@@ -88,7 +88,7 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end shadow">
                     <li>
-                        <a class="dropdown-item" th:href="@{/razas/nuevo}">
+                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addRaza">
                             <i class="bi bi-plus-circle text-success me-2"></i>Añadir Nueva Raza
                         </a>
                     </li>
@@ -101,9 +101,33 @@
                 </ul>
             </div>
         </div>
+        <!-- MODAL PARA AÑADIR UNA RAZA -->
+        <div class="modal" id="addRaza" tabindex="-1">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title">Registro de Raza</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <form  th:action="@{/razas/newRaza}" method="post" th:object="${razaForm}">
+                    <div class="mb-3">
+                        <label for="nombreRaza" class="form-label">Nombre de la Raza</label>
+                        <input type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre de la Raza" required>
+                    </div>
+                
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <input type="submit" class="btn btn-success" value="Guardar" >
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
 
         <div class="row g-4">
-            <div class="col-12 col-md-6 col-lg-4" th:each="raza : ${TodasRazas}">
+            <div class="col-12 col-md-6 col-lg-4" th:each="raza : ${TodasRazas}" th:if="${raza.nombre != 'Raza por defecto'}">
                 <div class="card breed-card h-100">
                     <div class="card-header bg-orange text-dark py-3">
                         <h3 class="h5 mb-0" th:text="${raza.nombre}">Nombre Raza</h3>
@@ -125,8 +149,7 @@
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white mt-5">
+    <footer class="bg-dark text-white mt-auto">  
         <div class="container py-5">
             <div class="row g-4">
                 <div class="col-md-4">

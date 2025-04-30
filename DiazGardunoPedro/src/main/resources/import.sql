@@ -2,7 +2,8 @@
 INSERT INTO raza (id,nombre) VALUES (1,'Limusina');
 INSERT INTO raza (id,nombre) VALUES (2,'Charolesa');
 INSERT INTO raza (id,nombre) VALUES (3,'Retinta');
-
+INSERT INTO raza (id,nombre) VALUES (4,'Raza por defecto');
+ALTER TABLE raza ALTER COLUMN id RESTART WITH 5;
 
 INSERT INTO vaca (id,peso,num_identificacion,fecha_nacimineto,fecha_parto,raza_id) VALUES (1,650.4,1001,'2020-05-15 10:30:00','2023-11-10 09:00:00',1);
 INSERT INTO vaca (id,peso,num_identificacion,fecha_nacimineto,fecha_parto,raza_id) VALUES (2,625.7,1002,'2021-06-18 11:15:00','2023-12-01 10:00:00',1);
