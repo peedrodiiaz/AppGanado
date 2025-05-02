@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -39,6 +40,12 @@ public class RazaController {
 		return "redirect:/razas";
 	}
 	
+	@PostMapping("/deleteRaza/{id}")
+		public String deleteRaza(@PathVariable Long id) {
+			Long idRazaSinCat = 4L;
+			razaService.deleteRaza(id, idRazaSinCat);
+			return "redirect:/razas";
+		}
 	
 	
 }

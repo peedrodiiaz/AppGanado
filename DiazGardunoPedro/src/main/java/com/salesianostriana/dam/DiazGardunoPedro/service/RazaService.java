@@ -10,28 +10,28 @@ import com.salesianostriana.dam.DiazGardunoPedro.model.Raza;
 import com.salesianostriana.dam.DiazGardunoPedro.model.Vaca;
 import com.salesianostriana.dam.DiazGardunoPedro.repository.RazaRepository;
 import com.salesianostriana.dam.DiazGardunoPedro.repository.VacaRepository;
+import com.salesianostriana.dam.DiazGardunoPedro.serviceBase.BaseService;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
+
+
 @Service
-public class RazaService {
+@RequiredArgsConstructor
+public class RazaService extends BaseService<Raza, Long, RazaRepository> {
 
 	private final VacaRepository vacaRepository;
 	
-	private final RazaRepository razaRepository;
 	
 	public List<Raza> getListRaza(){
 		
-		return razaRepository.findAll();
+		return findAll();
 		
 	}  
 	
 	
 	public Raza addRaza (Raza raza) {
-		razaRepository.save(raza);
-		return raza;
+		return save(raza);
 	}
 	
 	public Raza mostrarFormulario(Model m) {
@@ -40,22 +40,25 @@ public class RazaService {
 		return r;
 		
 	}
+	
 
-// Hacere esto	
-//	public Raza deleteRaza(Long id, Long idRazaSinDef) {
-//		List <Vaca> vacaList = vacaRepository.findAll();
-//		Raza r;
-//		Raza sinDef = razaRepository.findById(idRazaSinDef).orElseThrow(()
-//				-> new RuntimeException("No existe la raza con id: " + id));
-//		for (Vaca v : vacaList) {
-//			if (v.getRaza().getId() == id) {
-//				v.setRaza(sinDef);
-//			}
-//		
-//		}
-//		razaRepository.delete(r);
-//		return r;
 
-}
+	public void deleteRaza(Long id, Long idRazaSinCat) {
+		Raza razaEliminar = repositorio.findById(id).orElseThrow(()
+				-> new RuntimeException("No se ha encontrado la raza"));
+		
+		Raza razaSinCat = repositorio.findById(idRazaSinCat).orElseThrow(()
+				-> new RuntimeException("No se ha encontrado la raza"));
+		
+		List<Vaca> vacas = vacaRepository.findByRaza(razaEliminar);
+		
+		for (Vaca v : vacas) {
+			v.setRaza(razaSinCat);
+			
+		}
+		vacaRepository.saveAll(vacas);
+		delete(razaEliminar);
+
+	}
 }
 

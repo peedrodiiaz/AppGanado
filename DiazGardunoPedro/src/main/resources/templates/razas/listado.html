@@ -93,8 +93,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item text-danger" 
-                        th:href="@{/razas/eliminar}">
+                        <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#deleteRaza">
                             <i class="bi bi-trash me-2"></i>Eliminar Raza
                         </a>
                     </li>
@@ -123,6 +122,38 @@
                 </form>
                 </div>
             </div>
+            </div>
+        </div>
+        <!-- Modal para eliminar la categoria mostrando la lista y cogiendo el id-->
+        <div class="modal" id="deleteRaza" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Eliminar Raza</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Seleccione la raza que desea eliminar:</p>
+                        <!-- <form th:action="@{/razas/deleteRaza/{id}(id=${formDelete})}" method="post"> -->
+                        <form th:action="@{/razas/deleteRaza/{id}}" id="formDelete" method="post">
+                            <div class="mb-3">
+                                <select class="form-select" name="idRaza" id="selectRaza" required>
+                                    <option value="" disabled selected>Seleccione una raza</option>
+                                    <option th:each="raza : ${TodasRazas}" 
+                                            th:if="${raza.nombre != 'Raza por defecto'}"
+                                            th:value="${raza.id}" 
+                                            th:text="${raza.nombre}"
+                                            th:attr="data-id=${raza.id}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <input type="submit" class="btn btn-danger" value="Eliminar">
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -186,6 +217,28 @@
             <p class="text-center mb-0 small">&copy; 2025 CowsApp - Revolucionando la gestión ganadera</p>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('formDelete');
+            const select = document.getElementById('selectRaza'); 
+    
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); 
+    
+                const selectedOption = select.options[select.selectedIndex];
+                const razaId = selectedOption.getAttribute('data-id');
+    
+                if (razaId) {
+                    form.action = `/razas/deleteRaza/${razaId}`;
+                    form.submit();
+                } else {
+                    alert("Por favor selecciona una raza válida.");
+                }
+            });
+        });
+    </script>
+    
 
 </body>
 </html>
