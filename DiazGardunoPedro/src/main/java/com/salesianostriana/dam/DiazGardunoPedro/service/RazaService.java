@@ -31,6 +31,14 @@ public class RazaService extends BaseService<Raza, Long, RazaRepository> {
 	
 	
 	public Raza addRaza (Raza raza) {
+		List<Raza> razas = findAll();
+		String nombreRaza = raza.getNombre().trim();
+		for (Raza r : razas) {
+			if (r.getNombre().equalsIgnoreCase(nombreRaza)) {
+				return null;
+				
+			}
+		}
 		return save(raza);
 	}
 	
@@ -39,6 +47,15 @@ public class RazaService extends BaseService<Raza, Long, RazaRepository> {
 		m.addAttribute(r);
 		return r;
 		
+	}
+	
+	public Raza putRaza (Raza r) {
+		Raza raza = findById(r.getId());
+		if (raza != null) {
+			raza.setNombre(r.getNombre());
+			return edit(raza);
+		}
+		return null;
 	}
 	
 

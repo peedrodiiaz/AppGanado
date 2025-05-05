@@ -29,23 +29,18 @@
     
     <nav class="navbar navbar-expand-lg bg-white shadow-sm">
         <div class="container">
-            <div class="d-flex justify-content-center w-100">
-                <ul class="nav nav-pills nav-fill gap-3">
-                    <li class="nav-item">
-                        <a class="nav-link btn-lg text-white bg-success active" 
-                        th:href="@{/vacas}">
+            <ul class="nav nav-pills nav-fill gap-3 w-100">
+                <li class="nav-item">
+                    <a class="nav-link btn-lg text-white bg-success" th:href="@{/vacas}">
                         <i class="bi bi-clipboard2-pulse me-2"></i>Gestión de Vacas
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn-lg text-white bg-orange" 
-                        style="background: #FFA500;" 
-                        th:href="@{/razas}">
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn-lg text-white" style="background: #FFA500;" th:href="@{/razas}">
                         <i class="bi bi-database me-2"></i>Catálogo de Razas
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                    </a>
+                </li>
+            </ul>
         </div>
     </nav>
 
@@ -111,7 +106,7 @@
                                 </div>
                             </div>
 
-                            <!-- Consumo  -->
+            
                             <div class="col">
                                 <div class="card h-100 border-start border-4 border-primary">
                                     <div class="card-body">
@@ -132,7 +127,6 @@
                 </div>
             </div>
 
-            <!-- Columna de Noticias -->
             <div class="col-lg-4">
                 <div class="card border-orange shadow">
                     <div class="card-header bg-orange text-dark py-3">
@@ -152,6 +146,37 @@
                         </div>
                     </div>
                 </div>
+                <!-- aqui va a ver un carrusel de imagenes sobre los cambios en los precios del gnando vacuno en marzo de 2025 -->
+                <div class="card border-orange mt-4 shadow">
+                    <div class="card-header bg-orange text-dark py-3">
+                        <h2 class="h4 mb-0"><i class="bi bi-images me-2"></i>Precios marzo 2025</h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="carouselPrecios" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img src="../static/img/precio1.png" class="d-block w-100" th:src="@{/img/precio1.png}" alt="Precio 1">
+                                    
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="../static/img/precio2.jpg" class="d-block w-100" th:src="@{/img/precio2.jpg}" alt="Precio 2">
+                                
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="../static/img/precio3.jpg" class="d-block w-100" th:src="@{/img/precio3.jpg}" alt="Precio 3">
+                                
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselPrecios" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Anterior</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselPrecios" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Siguiente</span>
+                            </button>
+                        </div>
+                    </div>
             </div>
         </div>
     </main>
@@ -183,13 +208,13 @@
                         <a href="#" class="btn btn-success btn-sm rounded-circle p-2">
                             <i class="bi bi-youtube"></i>
                         </a>
-                    </div>
+                    </div>         
                 </div>
+            
                 <div class="col-md-4">
                     <h5 class="text-success mb-3">Sobre Nosotros</h5>
                     <p class="small">CowsApp es una plataforma innovadora diseñada para facilitar la gestión del ganado bovino, optimizando procesos y mejorando la productividad.</p>
-
-            </div>
+                </div>
             <hr class="border-success my-4">
             <p class="text-center mb-0 small">&copy; 2025 CowsApp - Revolucionando la gestión ganadera</p>
         </div>
