@@ -33,13 +33,13 @@ public class VacaController {
 	    @PostMapping("/newVaca")
 	    public String crearVaca(@ModelAttribute ("vacaForm") Vaca vaca, RedirectAttributes redirectAttributes) {
 	    	Vaca nuevaVaca = vacaService.addVaca(vaca);
-		    for (Vaca v : vacaService.findAll()) {
-		        if (v.getNumIdentificacion() == nuevaVaca.getNumIdentificacion()) {
+		   
+		        if (nuevaVaca == null) {
 		            redirectAttributes.addFlashAttribute("error", "Ya existe esa vaca.");
 		            redirectAttributes.addFlashAttribute("showModal", true);
 		            return "redirect:/vacas";
 		        }
-		    }
+		    
 	        return "redirect:/vacas";
 	    	
 	    }

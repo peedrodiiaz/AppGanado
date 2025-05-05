@@ -27,7 +27,14 @@ public class VacaService extends BaseService<Vaca, Long, VacaRepository> {
 	
 	public Vaca addVaca (Vaca vaca) {
 
-		return save(vaca);
+		boolean existe = findAll().stream()
+				.anyMatch(v -> v.getNumIdentificacion() == vaca.getNumIdentificacion());
+		if (existe) {
+			return null; 
+		}else {
+			return save(vaca);
+		}
+		
 	}
 	
 	public Vaca mostrarFormulario(Model m) {
