@@ -10,7 +10,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 
@@ -25,7 +27,8 @@ public class Raza {
 	private long id;
 	private String nombre;
 	
-
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	@OneToMany (mappedBy = "raza")
 	private List<Vaca>listVacas;
 	

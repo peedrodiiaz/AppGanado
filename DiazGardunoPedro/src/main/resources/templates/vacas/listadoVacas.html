@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CowsApp - Gestión de Vacas</title>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         .logo-image {
             border-radius: 50%;
@@ -18,18 +17,15 @@
             object-fit: cover;
             background-color: white;
         }
-        
         .cow-card {
             transition: transform 0.3s ease;
             border: 2px solid #198754;
         }
-        
         .cow-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 16px rgba(0,0,0,0.1);
         }
-        
-        .cattle-info {
+        .cow-info {
             font-size: 1.1rem;
             color: #FFA500;
             font-weight: 500;
@@ -37,51 +33,42 @@
     </style>
 </head>
 <body class="bg-light d-flex flex-column min-vh-100">
-
     <header class="bg-success bg-gradient py-5 shadow">
         <div class="container">
             <div class="d-flex align-items-center justify-content-center mb-4">
-                <img src="../static/img/logo.png" 
-                    class="logo-image"
-                    th:src="@{/img/logo.png}" 
-                    alt="Logo CowsApp">
+                <img th:src="@{/img/logo.png}" src="../static/img/logo.png" alt="Logo CowsApp" class="logo-image">
                 <div>
-                    <h1 class="display-4 fw-bold text-white mb-2"><a th:href="@{/}" class="link-light link-underline link-underline-opacity-0">CowsApp</a></h1>
+                    <h1 class="display-4 fw-bold text-white mb-2">
+                        <a th:href="@{/}" class="link-light text-decoration-none">CowsApp</a>
+                    </h1>
                     <p class="lead text-light mb-0">Gestión de Ganado Bovino</p>
                 </div>
             </div>
         </div>
     </header>
-
+    
     <nav class="navbar navbar-expand-lg bg-white shadow-sm">
         <div class="container">
-            <div class="d-flex justify-content-center w-100">
-                <ul class="nav nav-pills nav-fill gap-3">
-                    <li class="nav-item">
-                        <a class="nav-link btn-lg text-white bg-success active" 
-                        th:href="@{/vacas}">
+            <ul class="nav nav-pills nav-fill gap-3 w-100">
+                <li class="nav-item">
+                    <a class="nav-link btn-lg text-white bg-success active" th:href="@{/vacas}">
                         <i class="bi bi-clipboard2-pulse me-2"></i>Gestión de Vacas
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn-lg text-white bg-orange" 
-                        style="background: #FFA500;" 
-                        th:href="@{/razas}">
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn-lg text-white" style="background: #FFA500;" th:href="@{/razas}">
                         <i class="bi bi-database me-2"></i>Catálogo de Razas
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                    </a>
+                </li>
+            </ul>
         </div>
     </nav>
 
     <main class="container my-5 flex-grow-1">
-
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="h3 text-success"><i class="bi bi-clipboard2-pulse me-2"></i>Vacas Registradas</h2>
             <div class="dropdown">
-                <button class="btn btn-success rounded-pill px-4" type="button" 
-                        data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-success rounded-pill px-4" data-bs-toggle="dropdown">
                     <i class="bi bi-gear-wide-connected me-2"></i>Acciones
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end shadow">
@@ -99,109 +86,113 @@
             </div>
         </div>
 
-        <!-- Modal Añadir Vaca -->
-        <div class="modal" id="addVaca" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Registro de Nueva Vaca</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form th:action="@{/vacas/newVaca}" method="post" th:object="${vacaForm}">
-                            <div class="mb-3">
-                                <label class="form-label">Número de Identificación</label>
-                                <input type="number" class="form-control" th:field="*{numIdentificacion}" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Peso (kg)</label>
-                                <input type="number" step="0.1" class="form-control" th:field="*{peso}" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Fecha de Nacimiento</label>
-                                <input type="date" class="form-control" th:field="*{fechaNacimineto}" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Fecha de Último Parto</label>
-                                <input type="date" class="form-control" th:field="*{fechaParto}">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Raza</label>
-                                <select class="form-select" th:field="*{raza}" required>
-                                    <option th:each="raza : ${TodasRazas}" 
-                                            th:value="${raza.id}" 
-                                            th:text="${raza.nombre}"></option>
-                                </select>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <input type="submit" class="btn btn-success" value="Guardar">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+        <!-- Mensajes de error -->
+        <div th:if="${error}" class="alert alert-danger" role="alert">
+            <p th:text="${error}"></p>
         </div>
 
-        <!-- Modal Eliminar Vaca -->
-        <div class="modal" id="deleteVaca" tabindex="-1">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Eliminar Vaca</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Seleccione la vaca que desea eliminar:</p>
-                        <form th:action="@{/vacas/deleteVaca/{id}}" id="formDeleteVaca" method="post">
-                            <div class="mb-3">
-                                <select class="form-select" name="idVaca" id="selectVaca" required>
-                                    <option value="" disabled selected>Seleccione una vaca</option>
-                                    <option th:each="vaca : ${TodasVacas}" 
-                                            th:value="${vaca.id}" 
-                                            th:text="'ID: ' + ${vaca.id} + ' - ' + ${vaca.raza.nombre}"
-                                            th:attr="data-id=${vaca.id}">
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <input type="submit" class="btn btn-danger" value="Eliminar">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <!-- Tarjetas de Vacas -->
         <div class="row g-4">
             <div class="col-12 col-md-6 col-lg-4" th:each="vaca : ${TodasVacas}">
                 <div class="card cow-card h-100">
                     <div class="card-header bg-success text-white py-3">
-                        <h3 class="h5 mb-0">ID: <span th:text="${vaca.id}"></span></h3>
+                        <h3 class="h5 mb-0">Identificación <span th:text="${vaca.numIdentificacion}"></span></h3>
                     </div>
                     <div class="card-body">
-                        <div class="cattle-info mb-3">
-                            <i class="bi bi-123 me-2"></i>
-                            Nº Identificación: <span th:text="${vaca.numIdentificacion}"></span>
-                        </div>
-                        <div class="cattle-info mb-3">
+                        
+                        <div class="cow-info mb-3">
                             <i class="bi bi-speedometer2 me-2"></i>
                             Peso: <span th:text="${vaca.peso} + ' kg'"></span>
                         </div>
-                        <div class="cattle-info mb-3">
+                        <div class="cow-info mb-3">
                             <i class="bi bi-calendar-event me-2"></i>
-                            Nacimiento: <span th:text="${#dates.format(vaca.fechaNacimineto, 'dd/MM/yyyy')}"></span>
+                            Nacimiento:
+                            <span th:if="${vaca.fechaNacimiento != null}" th:text="${vaca.fechaNacimiento}"></span>
+                            <span th:unless="${vaca.fechaNacimiento != null}">Sin fecha</span>
                         </div>
-                        <div class="cattle-info">
+                        
+                        <div class="cow-info mb-3">
                             <i class="bi bi-motherboard me-2"></i>
-                            Último parto: <span th:text="${vaca.fechaParto != null} ? 
-                                ${#dates.format(vaca.fechaParto, 'dd/MM/yyyy')} : 'N/A'"></span>
+                            Último parto: 
+                            <span th:if="${vaca.fechaParto != null}" 
+                                th:text="${vaca.fechaParto}"></span>
+                            <span th:unless="${vaca.fechaParto != null}">N/A</span>
                         </div>
-                        <hr>
-                        <div class="small text-muted">
+                        <div class="cow-info">
                             <i class="bi bi-tag me-2"></i>
                             Raza: <span th:text="${vaca.raza.nombre}"></span>
+                        </div>
+                        <button type="button" class="btn btn-primary mt-3" 
+                                data-bs-toggle="modal" 
+                                th:data-bs-target="|#editVacaModal__${vaca.id}|">
+                            <i class="bi bi-pencil-square me-1"></i>Editar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Modal EDITAR Vaca -->
+                <div class="modal fade" 
+                    th:id="editVacaModal__ + ${vaca.id}"
+                    tabindex="-1"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Editar Vaca</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form th:action="@{/vacas/editVaca/{id}(id=${vaca.id})}" method="post">
+                                    <input type="hidden" name="id" th:value="${vaca.id}" />
+                                    <div class="mb-3">
+                                        <label class="form-label">Número de Identificación</label>
+                                        <input type="number" 
+                                            name="numIdentificacion" 
+                                            th:value="${vaca.numIdentificacion}"
+                                            class="form-control"
+                                            required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Peso (kg)</label>
+                                        <input type="number" 
+                                            step="0.1" 
+                                            name="peso" 
+                                            th:value="${vaca.peso}"
+                                            class="form-control"
+                                            required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Fecha de Nacimiento</label>
+                                        <input type="date" 
+                                            name="fechaNacimineto" 
+                                            th:value="${vaca.fechaNacimiento}"
+                                            class="form-control"
+                                            required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Fecha de Último Parto</label>
+                                        <input type="date" 
+                                            name="fechaParto" 
+                                            th:value="${vaca.fechaParto != null} ? 
+                                            ${vaca.fechaParto} : ''"
+                                            class="form-control">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Raza</label>
+                                        <select class="form-select" name="raza" required>
+                                            <option th:each="raza : ${TodasRazas}" 
+                                                    th:value="${raza.id}"
+                                                    th:text="${raza.nombre}"
+                                                    th:selected="${raza.id == vaca.raza.id}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-success">Guardar cambios</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -209,35 +200,100 @@
         </div>
     </main>
 
-    <footer class="bg-dark text-white mt-auto">  
-        <!-- Mantener el mismo footer que en razas -->
+    <!-- Modal AÑADIR Vaca -->
+    <div class="modal fade" id="addVaca" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Registrar Nueva Vaca</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/vacas/newVaca}"  th:object="${vacaForm}" method="post">
+                        <div class="mb-3">
+                            <label for="numIdentificacion" class="form-label">Número de Identificación</label>
+                            <input type="number" id="numIdentificacion" name="numIdentificacion" th:field="*{numIdentificacion}" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="peso" class="form-label" >Peso (kg)</label>
+                            <input type="number" id="peso" th:field="*{peso}" step="0.1" name="peso" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="fechaNacimiento">Fecha de Nacimiento</label>
+                            <input type="date" id="fechaNacimiento" th:field="*{fechaNacimiento}" name="fechaNacimineto" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="ultimoParto">Fecha de Último Parto</label>
+                            <input type="date" name="fechaParto" id="ultimoParto" th:field="*{fechaParto}" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Raza</label>
+                            <select class="form-select" name="raza" required>
+                                <option 
+                                        th:each="raza : ${TodasRazas}" 
+                                        th:value="${raza.id}"
+                                        th:text="${raza.nombre}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-success">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal ELIMINAR Vaca -->
+    <div class="modal fade" id="deleteVaca" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Eliminar Vaca</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Seleccione la vaca que desea eliminar:</p>
+                    <form id="formDeleteVaca" method="post">
+                        <div class="mb-3">
+                            <select class="form-select" id="selectVaca" required>
+                                <option value="" disabled selected>Seleccione una vaca</option>
+                                <option th:each="vaca : ${TodasVacas}"
+                                        th:value="${vaca.id}"
+                                        th:text="'ID: ' + ${vaca.id} + ' - ' + ${vaca.raza.nombre}"
+                                        th:attr="data-id=${vaca.id}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white mt-auto">
         <div class="container py-5">
             <div class="row g-4">
                 <div class="col-md-4">
                     <h5 class="text-success mb-3">Contacto</h5>
                     <ul class="list-unstyled">
-                        <li>
-                            <i class="bi bi-envelope text-success me-2"></i>
-                            diaz.gaped24@triana.salesianos.edu
-                        </li>
+                        <li><i class="bi bi-envelope text-success me-2"></i>diaz.gaped24@triana.salesianos.edu</li>
                     </ul>
                 </div>
-                
                 <div class="col-md-4">
                     <h5 class="text-success mb-3">Redes Sociales</h5>
                     <div class="d-flex gap-3">
-                        <a href="#" class="btn btn-success btn-sm rounded-circle p-2">
-                            <i class="bi bi-facebook"></i>
-                        </a>
-                        <a href="#" class="btn btn-success btn-sm rounded-circle p-2">
-                            <i class="bi bi-instagram"></i>
-                        </a>
-                        <a href="#" class="btn btn-success btn-sm rounded-circle p-2">
-                            <i class="bi bi-youtube"></i>
-                        </a>
+                        <a href="#" class="btn btn-success btn-sm rounded-circle p-2"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="btn btn-success btn-sm rounded-circle p-2"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="btn btn-success btn-sm rounded-circle p-2"><i class="bi bi-youtube"></i></a>
                     </div>
                 </div>
-                
                 <div class="col-md-4">
                     <h5 class="text-success mb-3">Sobre Nosotros</h5>
                     <p class="small">CowsApp es una plataforma innovadora diseñada para facilitar la gestión del ganado bovino, optimizando procesos y mejorando la productividad.</p>
@@ -249,19 +305,15 @@
     </footer>
 
     <script>
-        // Script para eliminar vacas
         document.addEventListener('DOMContentLoaded', function () {
             const formVaca = document.getElementById('formDeleteVaca');
-            const selectVaca = document.getElementById('selectVaca'); 
-
+            const selectVaca = document.getElementById('selectVaca');
+            
             formVaca.addEventListener('submit', function (event) {
-                event.preventDefault(); 
-
-                const selectedOption = selectVaca.options[selectVaca.selectedIndex];
-                const vacaId = selectedOption.getAttribute('data-id');
-
-                if (vacaId) {
-                    formVaca.action = `/vacas/deleteVaca/${vacaId}`;
+                event.preventDefault();
+                const selectedId = selectVaca.options[selectVaca.selectedIndex].getAttribute('data-id');
+                if (selectedId) {
+                    formVaca.action = `/vacas/deleteVaca/${selectedId}`;
                     formVaca.submit();
                 } else {
                     alert("Por favor selecciona una vaca válida.");
@@ -269,6 +321,5 @@
             });
         });
     </script>
-
 </body>
 </html>

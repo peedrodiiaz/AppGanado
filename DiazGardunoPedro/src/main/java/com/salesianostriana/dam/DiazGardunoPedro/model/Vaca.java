@@ -1,6 +1,8 @@
 package com.salesianostriana.dam.DiazGardunoPedro.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,9 +25,10 @@ public class Vaca {
 	private long id;
 	private double peso;
 	private int numIdentificacion;
-	
-	private LocalDateTime fechaNacimineto;
-	private LocalDateTime fechaParto;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate fechaNacimiento ;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate fechaParto;
 	
 	@ManyToOne
 	private Raza raza;
