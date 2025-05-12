@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <style>
         .logo-image {
             border-radius: 50%;
@@ -86,12 +87,10 @@
             </div>
         </div>
 
-        <!-- Mensajes de error -->
         <div th:if="${error}" class="alert alert-danger" role="alert">
             <p th:text="${error}"></p>
         </div>
 
-        <!-- Tarjetas de Vacas -->
         <div class="row g-4">
             <div class="col-12 col-md-6 col-lg-4" th:each="vaca : ${TodasVacas}">
                 <div class="card cow-card h-100">
@@ -99,24 +98,19 @@
                         <h3 class="h5 mb-0">Identificación <span th:text="${vaca.numIdentificacion}"></span></h3>
                     </div>
                     <div class="card-body">
-                        
                         <div class="cow-info mb-3">
                             <i class="bi bi-speedometer2 me-2"></i>
                             Peso: <span th:text="${vaca.peso} + ' kg'"></span>
                         </div>
                         <div class="cow-info mb-3">
                             <i class="bi bi-calendar-event me-2"></i>
-                            Nacimiento:
-                            <span th:if="${vaca.fechaNacimiento != null}" th:text="${vaca.fechaNacimiento}"></span>
-                            <span th:unless="${vaca.fechaNacimiento != null}">Sin fecha</span>
+                            Nacimiento: 
+                            <span th:text="${vaca.fechaNacimiento} ?: 'No registrado'"></span>
                         </div>
-                        
                         <div class="cow-info mb-3">
                             <i class="bi bi-motherboard me-2"></i>
                             Último parto: 
-                            <span th:if="${vaca.fechaParto != null}" 
-                                th:text="${vaca.fechaParto}"></span>
-                            <span th:unless="${vaca.fechaParto != null}">N/A</span>
+                            <span th:text="${vaca.fechaParto} ?: 'Vaca sin parto'"></span>
                         </div>
                         <div class="cow-info">
                             <i class="bi bi-tag me-2"></i>
@@ -124,62 +118,47 @@
                         </div>
                         <button type="button" class="btn btn-primary mt-3" 
                                 data-bs-toggle="modal" 
-                                th:data-bs-target="|#editVacaModal__${vaca.id}|">
+                                th:attr="data-bs-target='#editVacaModal_' + ${vaca.id}">
                             <i class="bi bi-pencil-square me-1"></i>Editar
                         </button>
                     </div>
                 </div>
 
-                <!-- Modal EDITAR Vaca -->
-                <div class="modal fade" 
-                    th:id="editVacaModal__ + ${vaca.id}"
-                    tabindex="-1"
-                    aria-hidden="true">
+                <!-- Modal Editar Vaca -->
+                <div class="modal fade" th:id="'editVacaModal_' + ${vaca.id}" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">Editar Vaca</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
-                            <div class="modal-body">
-                                <form th:action="@{/vacas/editVaca/{id}(id=${vaca.id})}" method="post">
-                                    <input type="hidden" name="id" th:value="${vaca.id}" />
+                            <form th:action="@{/vacas/editarVaca/{id}(id=${vaca.id})}" method="post">
+                                <div class="modal-body">
                                     <div class="mb-3">
                                         <label class="form-label">Número de Identificación</label>
-                                        <input type="number" 
-                                            name="numIdentificacion" 
-                                            th:value="${vaca.numIdentificacion}"
-                                            class="form-control"
-                                            required>
+                                        <h3 th:text="${vaca.numIdentificacion}"></h3>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Peso (kg)</label>
-                                        <input type="number" 
-                                            step="0.1" 
-                                            name="peso" 
-                                            th:value="${vaca.peso}"
-                                            class="form-control"
-                                            required>
+                                        <input type="number" step="0.1" class="form-control" 
+                                            th:value="${vaca.peso}" name="peso" id="peso" required>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Fecha de Nacimiento</label>
-                                        <input type="date" 
-                                            name="fechaNacimineto" 
-                                            th:value="${vaca.fechaNacimiento}"
-                                            class="form-control"
+                                        <input type="date" class="form-control" 
+                                            th:value="${vaca.fechaNacimiento}"  name="fechaNacimiento" id="fechaNacimiento"
+                                            th:max="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
                                             required>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Fecha de Último Parto</label>
-                                        <input type="date" 
-                                            name="fechaParto" 
-                                            th:value="${vaca.fechaParto != null} ? 
-                                            ${vaca.fechaParto} : ''"
-                                            class="form-control">
+                                        <input type="date" class="form-control" 
+                                            th:value="vaca.fechaParto"  name="fechaParto" id="fechaParto"
+                                            th:max="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Raza</label>
-                                        <select class="form-select" name="raza" required>
+                                        <select class="form-select" th:field="${vaca.raza}" required>
                                             <option th:each="raza : ${TodasRazas}" 
                                                     th:value="${raza.id}"
                                                     th:text="${raza.nombre}"
@@ -187,12 +166,12 @@
                                             </option>
                                         </select>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                        <button type="submit" class="btn btn-success">Guardar cambios</button>
-                                    </div>
-                                </form>
-                            </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-success">Guardar cambios</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -200,7 +179,7 @@
         </div>
     </main>
 
-    <!-- Modal AÑADIR Vaca -->
+    <!-- Modal Añadir Vaca -->
     <div class="modal fade" id="addVaca" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -208,45 +187,53 @@
                     <h5 class="modal-title">Registrar Nueva Vaca</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">
-                    <form th:action="@{/vacas/newVaca}"  th:object="${vacaForm}" method="post">
+                <form th:action="@{/vacas/newVaca}" method="post" th:object="${vaca}">
+                    <div class="modal-body">
                         <div class="mb-3">
-                            <label for="numIdentificacion" class="form-label">Número de Identificación</label>
-                            <input type="number" id="numIdentificacion" name="numIdentificacion" th:field="*{numIdentificacion}" class="form-control" required>
+                            <label class="form-label">Número de Identificación</label>
+                            <input type="number" class="form-control" 
+                                th:field="*{numIdentificacion}" 
+                                min="1000" required>
                         </div>
                         <div class="mb-3">
-                            <label for="peso" class="form-label" >Peso (kg)</label>
-                            <input type="number" id="peso" th:field="*{peso}" step="0.1" name="peso" class="form-control" required>
+                            <label class="form-label">Peso (kg)</label>
+                            <input type="number" class="form-control" 
+                                th:field="*{peso}" step="0.1" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="fechaNacimiento">Fecha de Nacimiento</label>
-                            <input type="date" id="fechaNacimiento" th:field="*{fechaNacimiento}" name="fechaNacimineto" class="form-control" required>
+                            <label class="form-label">Fecha de Nacimiento</label>
+                            <input type="date" class="form-control" 
+                                th:field="*{fechaNacimiento}" 
+                                th:max="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" 
+                                required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="ultimoParto">Fecha de Último Parto</label>
-                            <input type="date" name="fechaParto" id="ultimoParto" th:field="*{fechaParto}" class="form-control">
+                            <label class="form-label">Fecha de Último Parto</label>
+                            <input type="date" class="form-control" 
+                                th:field="*{fechaParto}"
+                                th:max="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Raza</label>
-                            <select class="form-select" name="raza" required>
-                                <option 
-                                        th:each="raza : ${TodasRazas}" 
+                            <select class="form-select" th:field="*{raza.id}" required>
+                                <option th:each="raza : ${TodasRazas}" 
+                                        th:if="${raza.nombre != 'Raza por defecto'}"
                                         th:value="${raza.id}"
                                         th:text="${raza.nombre}">
                                 </option>
                             </select>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-success">Guardar</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 
-    <!-- Modal ELIMINAR Vaca -->
+    <!-- Modal Eliminar Vaca -->
     <div class="modal fade" id="deleteVaca" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -256,14 +243,13 @@
                 </div>
                 <div class="modal-body">
                     <p>Seleccione la vaca que desea eliminar:</p>
-                    <form id="formDeleteVaca" method="post">
+                    <form th:action="@{/vacas/deleteVaca}" method="post">
                         <div class="mb-3">
-                            <select class="form-select" id="selectVaca" required>
+                            <select class="form-select" name="id" required>
                                 <option value="" disabled selected>Seleccione una vaca</option>
                                 <option th:each="vaca : ${TodasVacas}"
                                         th:value="${vaca.id}"
-                                        th:text="'ID: ' + ${vaca.id} + ' - ' + ${vaca.raza.nombre}"
-                                        th:attr="data-id=${vaca.id}">
+                                        th:text="'ID: ' + ${vaca.id} + ' - ' + ${vaca.raza.nombre}">
                                 </option>
                             </select>
                         </div>
@@ -303,23 +289,5 @@
             <p class="text-center mb-0 small">&copy; 2025 CowsApp - Revolucionando la gestión ganadera</p>
         </div>
     </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const formVaca = document.getElementById('formDeleteVaca');
-            const selectVaca = document.getElementById('selectVaca');
-            
-            formVaca.addEventListener('submit', function (event) {
-                event.preventDefault();
-                const selectedId = selectVaca.options[selectVaca.selectedIndex].getAttribute('data-id');
-                if (selectedId) {
-                    formVaca.action = `/vacas/deleteVaca/${selectedId}`;
-                    formVaca.submit();
-                } else {
-                    alert("Por favor selecciona una vaca válida.");
-                }
-            });
-        });
-    </script>
 </body>
 </html>

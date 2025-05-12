@@ -1,12 +1,13 @@
 package com.salesianostriana.dam.DiazGardunoPedro.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.salesianostriana.dam.DiazGardunoPedro.model.Raza;
 import com.salesianostriana.dam.DiazGardunoPedro.model.Vaca;
-import com.salesianostriana.dam.DiazGardunoPedro.repository.RazaRepository;
 import com.salesianostriana.dam.DiazGardunoPedro.repository.VacaRepository;
 import com.salesianostriana.dam.DiazGardunoPedro.serviceBase.BaseService;
 
@@ -27,13 +28,24 @@ public class VacaService extends BaseService<Vaca, Long, VacaRepository> {
 	
 	public Vaca addVaca (Vaca vaca) {
 
-		boolean existe = findAll().stream()
-				.anyMatch(v -> v.getNumIdentificacion() == vaca.getNumIdentificacion());
-		if (existe) {
-			return null; 
-		}else {
-			return save(vaca);
-		}
+		LocalDate hoy = LocalDate.now();
+
+	    
+	    if (vaca.getFechaNacimiento() != null && vaca.getFechaNacimiento().isAfter(hoy)) {
+	        throw new IllegalArgumentException("La fecha de nacimiento no puede ser posterior a hoy.");
+	    }
+	    
+	    if (vaca.getFechaParto() != null && vaca.getFechaParto().isAfter(hoy)) {
+	        throw new IllegalArgumentException("La fecha de parto no puede ser posterior a hoy .");
+	    }
+	    
+	    boolean existe = findAll().stream()
+	            .anyMatch(v -> v.getNumIdentificacion() == vaca.getNumIdentificacion());
+	    if (existe) {
+	        throw new IllegalArgumentException("Ya existe una vaca con ese número de identificación.");
+	    }
+
+	    return save(vaca);
 		
 	}
 	
@@ -46,9 +58,18 @@ public class VacaService extends BaseService<Vaca, Long, VacaRepository> {
 	
 	public Vaca putVaca (Vaca v) {
 		
-			return edit(v);
-		
+		Vaca vaca = findById(v.getId());
+		if (vaca != null) {
+			vaca.setFechaNacimiento(v.getFechaNacimiento());
+			vaca.setFechaParto(v.getFechaParto());
+			vaca.setRaza(v.getRaza());
+			vaca.setPeso(v.getPeso());
+			return edit(vaca);
+		}
+		return null;
 	}
+		
+	
 	public void deleteVaca (Long id) {
 		
 		 deleteById(id);

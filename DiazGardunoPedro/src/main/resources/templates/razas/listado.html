@@ -92,10 +92,7 @@
 
         <!-- Tarjetas -->
         <div class="row g-4">
-            <div class="col-12 col-md-6 col-lg-4"
-                th:each="raza : ${TodasRazas}"
-                th:if="${raza.nombre} != 'Raza por defecto'">
-
+            <div class="col-12 col-md-6 col-lg-4" th:each="raza : ${TodasRazas}" th:if="${raza.nombre} != 'Raza por defecto'">
                 <div class="card breed-card h-100">
                     <div class="card-header bg-orange text-dark py-3">
                         <h3 class="h5 mb-0" th:text="${raza.nombre}">Nombre Raza</h3>
@@ -112,11 +109,7 @@
                 </div>
 
                 <!-- Modal EDITAR Raza -->
-                <div class="modal fade"
-                    th:id="editRazaModal__ + ${raza.id}"
-                    tabindex="-1"
-                    aria-labelledby="editRazaLabel__${raza.id}"
-                    aria-hidden="true">
+                <div class="modal fade" th:id="editRazaModal__ + ${raza.id}" tabindex="-1" aria-labelledby="editRazaLabel__${raza.id}" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -128,13 +121,7 @@
                                     <input type="hidden" name="id" th:value="${raza.id}" />
                                     <div class="mb-3">
                                         <label th:for="'nombreRaza__' + ${raza.id}" class="form-label">Nombre de la Raza</label>
-                                        <input type="text"
-                                            th:id="'nombreRaza__' + ${raza.id}"
-                                            name="nombre"
-                                            th:value="${raza.nombre}"
-                                            class="form-control"
-                                            placeholder="Nuevo nombre de la raza"
-                                            required>
+                                        <input type="text" th:id="'nombreRaza__' + ${raza.id}"  name="nombre"th:value="${raza.nombre}" class="form-control" placeholder="Nuevo nombre de la raza" required>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -145,7 +132,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </main>
