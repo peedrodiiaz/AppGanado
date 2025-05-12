@@ -243,13 +243,14 @@
                 </div>
                 <div class="modal-body">
                     <p>Seleccione la vaca que desea eliminar:</p>
-                    <form th:action="@{/vacas/deleteVaca}" method="post">
+                    <form id="formDelete" method="post">
                         <div class="mb-3">
-                            <select class="form-select" name="id" required>
+                            <select class="form-select" name="id"   id="selectVaca" required>
                                 <option value="" disabled selected>Seleccione una vaca</option>
                                 <option th:each="vaca : ${TodasVacas}"
                                         th:value="${vaca.id}"
-                                        th:text="'ID: ' + ${vaca.id} + ' - ' + ${vaca.raza.nombre}">
+                                        th:text="'Num Identificación : ' + ${vaca.numIdentificacion} + ' - ' + ${vaca.raza.nombre}"
+                                        th:attr="data-id=${vaca.id}">
                                 </option>
                             </select>
                         </div>
@@ -289,5 +290,22 @@
             <p class="text-center mb-0 small">&copy; 2025 CowsApp - Revolucionando la gestión ganadera</p>
         </div>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('formDelete');
+            const select = document.getElementById('selectVaca');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const selectedId = select.options[select.selectedIndex].getAttribute('data-id');
+                if (selectedId) {
+                    form.action = `/vacas/deleteVaca/${selectedId}`;
+                    form.submit();
+                } else {
+                    alert("Por favor selecciona una raza válida.");
+                }
+            });
+        });
+    </script>
+    
 </body>
 </html>

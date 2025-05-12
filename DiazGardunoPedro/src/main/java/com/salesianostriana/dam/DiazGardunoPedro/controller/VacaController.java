@@ -1,6 +1,8 @@
 package com.salesianostriana.dam.DiazGardunoPedro.controller;
 
 
+import java.lang.ProcessBuilder.Redirect;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.salesianostriana.dam.DiazGardunoPedro.model.Raza;
 import com.salesianostriana.dam.DiazGardunoPedro.model.Vaca;
 import com.salesianostriana.dam.DiazGardunoPedro.service.RazaService;
 import com.salesianostriana.dam.DiazGardunoPedro.service.VacaService;
@@ -54,7 +55,7 @@ public class VacaController {
 	    
 	    
 	    @PostMapping("/editarVaca/{id}")
-	   public String editarVaca(@PathVariable Long id, @ModelAttribute("TodasVacas") Vaca r) {
+	    public String editarVaca(@PathVariable Long id, @ModelAttribute("TodasVacas") Vaca r) {
 	
 	  	  Vaca vaca = vacaService.putVaca(r);
 	        if (vaca == null) {
@@ -63,4 +64,14 @@ public class VacaController {
 	        return "redirect:/vacas";
 	    }
 
+	    @PostMapping("/deleteVaca/{id}")
+	    public String deleteVaca (@PathVariable Long id) {
+	    	
+	    	vacaService.deleteById(id);
+
+	    	return "redirect:/vacas";
+	    	
+	    	
+	    	
+	    }
 }
