@@ -17,8 +17,6 @@ public abstract class BaseService <T, ID, R extends JpaRepository<T, ID>> {
 	@Autowired
 	protected R repositorio;
 
-	
-	
 
 	public T save(T t) {
 		return repositorio.save(t);

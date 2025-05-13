@@ -29,6 +29,10 @@ public class RazaService extends BaseService<Raza, Long, RazaRepository> {
 		
 	}  
 	
+	public Raza findPorId(Long id) {
+	    return findById(id);
+	}
+
 	
 	public Raza addRaza (Raza raza) {
 		List<Raza> razas = findAll();

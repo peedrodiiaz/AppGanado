@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Esto es un listado de las razas de gando bovino de España.">
     <title>CowsApp - Catálogo de Razas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/script.js}" defer></script>
     <style>
         .logo-image {
             border-radius: 50%;
@@ -30,22 +32,13 @@
             color: #198754;
             font-weight: 500;
         }
+        .filtro {
+            display: none;
+        }
     </style>
 </head>
 <body class="bg-light d-flex flex-column min-vh-100">
-    <header class="bg-success bg-gradient py-5 shadow">
-        <div class="container">
-            <div class="d-flex align-items-center justify-content-center mb-4">
-                <img th:src="@{/img/logo.png}" src="../static/img/logo.png" alt="Logo CowsApp" class="logo-image">
-                <div>
-                    <h1 class="display-4 fw-bold text-white mb-2">
-                        <a th:href="@{/}" class="link-light text-decoration-none">CowsApp</a>
-                    </h1>
-                    <p class="lead text-light mb-0">Gestión de Razas Bovinas</p>
-                </div>
-            </div>
-        </div>
-    </header>
+    <header th:replace="~{fragments/header :: header}"></header>
     <nav class="navbar navbar-expand-lg bg-white shadow-sm">
         <div class="container">
             <ul class="nav nav-pills nav-fill gap-3 w-100">
@@ -67,6 +60,10 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="h3 text-success"><i class="bi bi-database me-2"></i>Razas Registradas</h2>
             <div class="dropdown">
+                <button class="btn btn-outline-success  px-4 me-2" type="button">
+                    <i class="bi bi-search me-2"></i>
+                    <input type="text" class="form-control" id="buscador" placeholder="Buscar raza">
+                </button>
                 <button class="btn btn-success rounded-pill px-4" data-bs-toggle="dropdown">
                     <i class="bi bi-gear-wide-connected me-2"></i>Acciones
                 </button>
@@ -85,7 +82,6 @@
             </div>
         </div>
 
-        <!-- Mensaje de error  -->
         <div th:if="${error}" class="alert alert-danger" role="alert">
             <p th:text="${error}"></p>
         </div>
@@ -93,23 +89,27 @@
         <!-- Tarjetas -->
         <div class="row g-4">
             <div class="col-12 col-md-6 col-lg-4" th:each="raza : ${TodasRazas}" th:if="${raza.nombre} != 'Raza por defecto'">
-                <div class="card breed-card h-100">
+                <div class="card breed-card h-100 razas-card">
                     <div class="card-header bg-orange text-dark py-3">
                         <h3 class="h5 mb-0" th:text="${raza.nombre}">Nombre Raza</h3>
                     </div>
                     <div class="card-body">
-                        <p class="mb-3">
+                        <h6 class="mb-3">
                             <i class="bi bi-cow text-success fs-4 me-2"></i>
                             <span th:text="${#lists.size(raza.listVacas)} + ' vacas registradas'">0 vacas</span>
-                        </p>
+                        </h6>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" th:data-bs-target="|#editRazaModal__${raza.id}|">
                             <i class="bi bi-pencil-square me-1"></i>Editar
                         </button>
+                        <a type="button"  th:href="@{/razas/{id}(id=${raza.id})}" class="btn btn-outline-warning ml-3">
+                            Ver Vacas
+                        </a>
+                    </div>
                     </div>
                 </div>
 
                 <!-- Modal EDITAR Raza -->
-                <div class="modal fade" th:id="editRazaModal__ + ${raza.id}" tabindex="-1" aria-labelledby="editRazaLabel__${raza.id}" aria-hidden="true">
+                <div class="modal fade" th:id="editRazaModal__${raza.id}" tabindex="-1" aria-labelledby="editRazaLabel__${raza.id}" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -120,7 +120,7 @@
                                 <form th:action="@{/razas/editRaza/{id}(id=${raza.id})}" method="post">
                                     <input type="hidden" name="id" th:value="${raza.id}" />
                                     <div class="mb-3">
-                                        <label th:for="'nombreRaza__' + ${raza.id}" class="form-label">Nombre de la Raza</label>
+                                        <label th:for="'nombreRaza__' + ${raza.id}" class="form-label"></a>Nombre de la Raza</label>
                                         <input type="text" th:id="'nombreRaza__' + ${raza.id}"  name="nombre"th:value="${raza.nombre}" class="form-control" placeholder="Nuevo nombre de la raza" required>
                                     </div>
                                     <div class="modal-footer">
@@ -190,49 +190,7 @@
         </div>
     </div>
 
-    <footer class="bg-dark text-white mt-auto">
-        <div class="container py-5">
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <h5 class="text-success mb-3">Contacto</h5>
-                    <ul class="list-unstyled">
-                        <li><i class="bi bi-envelope text-success me-2"></i>diaz.gaped24@triana.salesianos.edu</li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5 class="text-success mb-3">Redes Sociales</h5>
-                    <div class="d-flex gap-3">
-                        <a href="#" class="btn btn-success btn-sm rounded-circle p-2"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="btn btn-success btn-sm rounded-circle p-2"><i class="bi bi-instagram"></i></a>
-                        <a href="#" class="btn btn-success btn-sm rounded-circle p-2"><i class="bi bi-youtube"></i></a>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <h5 class="text-success mb-3">Sobre Nosotros</h5>
-                    <p class="small">CowsApp es una plataforma innovadora diseñada para facilitar la gestión del ganado bovino, optimizando procesos y mejorando la productividad.</p>
-                </div>
-            </div>
-            <hr class="border-success my-4">
-            <p class="text-center mb-0 small">&copy; 2025 CowsApp - Revolucionando la gestión ganadera</p>
-        </div>
-    </footer>
+    <footer th:replace="fragments/footer :: footer"></footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.getElementById('formDelete');
-            const select = document.getElementById('selectRaza');
-            form.addEventListener('submit', function (event) {
-                event.preventDefault();
-                const selectedId = select.options[select.selectedIndex].getAttribute('data-id');
-                if (selectedId) {
-                    form.action = `/razas/deleteRaza/${selectedId}`;
-                    form.submit();
-                } else {
-                    alert("Por favor selecciona una raza válida.");
-                }
-            });
-        });
-    </script>
-    
 </body>
 </html>

@@ -63,6 +63,13 @@ public class RazaController {
 			razaService.deleteRaza(id, idRazaSinCat);
 			return "redirect:/razas";
 		}
+
+	@GetMapping("/{id}")
+	public String verVacasPorRaza(@PathVariable Long id, Model model) {
+	    Raza raza = razaService.findById(id);
+	    model.addAttribute("raza", raza);
+	    return "razas/listadoPorRazas"; 
+	}
 	
 	
 }
