@@ -39,7 +39,7 @@
 </head>
 <body class="bg-light d-flex flex-column min-vh-100">
 
-    <header th:replace="fragments/header :: header"></header>
+    <header th:replace="~{fragments/header :: header}"></header>
     <nav class="navbar navbar-expand-lg bg-white shadow-sm">
         <div class="container">
             <ul class="nav nav-pills nav-fill gap-3 w-100">
@@ -60,6 +60,23 @@
     <main class="container my-5 flex-grow-1">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="h3 text-success"><i class="bi bi-clipboard2-pulse me-2"></i>Vacas Registradas</h2>
+            <!-- Opciones de ordenaciones -->
+            <div class="d-flex align-items-center">
+                <form method="get" th:action="@{/vacas/ordenadas}" class="d-inline-flex align-items-center me-3">
+                    <label class="me-2 mb-0">Ordenar por:</label>
+                    <select class="form-select form-select-sm me-2" name="criterio" onchange="this.form.submit()">
+                        <option >Selecciona...</option>
+                        <option value="pesoDesc" th:selected="${param.criterio == 'pesoDesc'}">Más peso</option>
+                        <option value="pesoAsc" th:selected="${param.criterio == 'pesoAsc'}">Menos peso</option>
+                        <option value="edadDesc" th:selected="${param.criterio == 'edadDesc'}">Más viejas</option>
+                        <option value="edadAsc" th:selected="${param.criterio == 'edadAsc'}">Más jóvenes</option>
+                        <option value="partoReciente" th:selected="${param.criterio == 'partoReciente'}">Parto más reciente</option>
+                        <option value="partoAntiguo" th:selected="${param.criterio == 'partoAntiguo'}">Parto más antiguo</option>
+                        
+                    </select>
+                </form>
+            </div>
+
             <div class="dropdown">
                 <button class="btn btn-outline-success  px-4 me-2" type="button">
                     <i class="bi bi-search me-2"></i>
@@ -289,7 +306,7 @@
             <p class="text-center mb-0 small">&copy; 2025 CowsApp - Revolucionando la gestión ganadera</p>
         </div>
 
-        <footer th:replace="fragments/footer :: footer"></footer>
+        <footer th:replace="~{fragments/footer :: footer}"></footer>
 
     
 </body>

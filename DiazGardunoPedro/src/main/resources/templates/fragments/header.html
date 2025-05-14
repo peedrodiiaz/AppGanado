@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+    <header th:fragment="header" class="bg-success bg-gradient py-5 shadow">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-center mb-4">
+                <img class="logo-image" th:src="@{/img/logo.png}"  src="../static/img/logo.png" alt="Logo CowsApp" >
+                <div>
+                    <h1 class="display-4 fw-bold text-white mb-2">
+                        <a th:href="@{/}" class="link-light text-decoration-none">CowsApp</a>
+                    </h1>
+                    <p class="lead text-light mb-0">Gestión de Razas Bovinas</p>
+                </div>
+            </div>
+        </div>
+    </header>
+</body>
+</html>

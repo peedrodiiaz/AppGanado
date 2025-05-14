@@ -1,5 +1,7 @@
 package com.salesianostriana.dam.DiazGardunoPedro.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,8 +50,8 @@ public class RazaController {
 	
 	@PostMapping("/editRaza/{id}")
 	public String editRaza(@PathVariable Long id, @ModelAttribute("razaForm") Raza r) {
-		Raza raza = razaService.putRaza(r);
-		if (raza == null) {
+		Optional<Raza> raza = razaService.putRaza(r);
+		if (raza.isPresent()) {
 			return "redirect:/razas";
 		}
 		return "redirect:/razas";
@@ -66,10 +68,18 @@ public class RazaController {
 
 	@GetMapping("/{id}")
 	public String verVacasPorRaza(@PathVariable Long id, Model model) {
-	    Raza raza = razaService.findById(id);
-	    model.addAttribute("raza", raza);
+	    Optional<Raza> raza = razaService.findById(id);
+	    
+	    if (raza.isPresent()) {
+	        model.addAttribute("raza", raza.get());
+	    } else {
+	        model.addAttribute("error", "Raza no encontrada");
+			
+		}
+	    
 	    return "razas/listadoPorRazas"; 
 	}
+	
 	
 	
 }

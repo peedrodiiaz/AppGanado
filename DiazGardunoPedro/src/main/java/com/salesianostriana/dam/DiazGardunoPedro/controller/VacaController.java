@@ -1,7 +1,7 @@
 package com.salesianostriana.dam.DiazGardunoPedro.controller;
 
-
-import java.lang.ProcessBuilder.Redirect;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.salesianostriana.dam.DiazGardunoPedro.model.Vaca;
@@ -34,7 +35,7 @@ public class VacaController {
 	    }
 
 	    @PostMapping("/newVaca")
-	    public String crearVaca(@ModelAttribute("vacaForm") Vaca vaca, RedirectAttributes redirectAttributes) {
+	    public String crearVaca(@ModelAttribute("vaca") Vaca vaca, RedirectAttributes redirectAttributes) {
 	        try {
 	            Vaca nuevaVaca = vacaService.addVaca(vaca);
 
@@ -57,8 +58,8 @@ public class VacaController {
 	    @PostMapping("/editarVaca/{id}")
 	    public String editarVaca(@PathVariable Long id, @ModelAttribute("TodasVacas") Vaca r) {
 	
-	  	  Vaca vaca = vacaService.putVaca(r);
-	        if (vaca == null) {
+	  	  Optional<Vaca> vaca = vacaService.putVaca(r);
+	        if (vaca.isPresent()) {
 	            return "redirect:/vacas";
 	        }
 	        return "redirect:/vacas";
@@ -74,4 +75,17 @@ public class VacaController {
 	    	
 	    	
 	    }
+	    @GetMapping("/ordenadas")
+	    public String listarVacasOrdenadas(@RequestParam("criterio") String criterio, Model model) {
+	        List<Vaca> vacasOrdenadas = vacaService.obtenerVacasOrdenadas(criterio);
+	        model.addAttribute("TodasVacas", vacasOrdenadas);
+	        model.addAttribute("TodasRazas", razaService.getListRaza()); 
+	        model.addAttribute("vaca", new Vaca()); 
+	        return "vacas/listadoVacas"; 
+	    }
+
+	    
+
+
+
 }

@@ -1,21 +1,23 @@
 package com.salesianostriana.dam.DiazGardunoPedro.service;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.salesianostriana.dam.DiazGardunoPedro.model.Vaca;
 import com.salesianostriana.dam.DiazGardunoPedro.repository.VacaRepository;
-import com.salesianostriana.dam.DiazGardunoPedro.serviceBase.BaseService;
+import com.salesianostriana.dam.DiazGardunoPedro.serviceBase.BaseServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 
-public class VacaService extends BaseService<Vaca, Long, VacaRepository> {
+public class VacaService extends BaseServiceImpl<Vaca, Long, VacaRepository> {
 	
 	
 	public List<Vaca> getListVaca(){
@@ -55,17 +57,10 @@ public class VacaService extends BaseService<Vaca, Long, VacaRepository> {
 		
 	}
 	
-	public Vaca putVaca (Vaca v) {
+	public Optional<Vaca> putVaca (Vaca v) {
 		
-		Vaca vaca = findById(v.getId());
-		if (vaca != null) {
-			vaca.setFechaNacimiento(v.getFechaNacimiento());
-			vaca.setFechaParto(v.getFechaParto());
-			vaca.setRaza(v.getRaza());
-			vaca.setPeso(v.getPeso());
-			return edit(vaca);
-		}
-		return null;
+		return Optional.of(edit(v));
+			
 	}
 		
 	
@@ -74,5 +69,25 @@ public class VacaService extends BaseService<Vaca, Long, VacaRepository> {
 		 deleteById(id);
 		
 	}
+	
+	public List<Vaca> obtenerVacasOrdenadas(String criterio) {
+	    List<Vaca> vacas = findAll();
+
+	    Comparator<Vaca> comparator = switch (criterio) {
+	        case "pesoDesc" -> Comparator.comparingDouble(Vaca::getPeso).reversed();
+	        case "pesoAsc" -> Comparator.comparingDouble(Vaca::getPeso);
+	        case "edadDesc" -> Comparator.comparing(Vaca::getFechaNacimiento);
+	        case "edadAsc" -> Comparator.comparing(Vaca::getFechaNacimiento).reversed();
+	        case "partoReciente" -> Comparator.comparing(Vaca::getFechaParto).reversed();
+	        case "partoAntiguo" -> Comparator.comparing(Vaca::getFechaParto);
+	        default -> throw new IllegalArgumentException("Criterio de orden no válido: " + criterio);
+	    };
+
+	    vacas.sort(comparator);
+	    return vacas;
+	}
+	
+	
+	
 
 }

@@ -2,6 +2,7 @@ package com.salesianostriana.dam.DiazGardunoPedro.service;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -10,7 +11,7 @@ import com.salesianostriana.dam.DiazGardunoPedro.model.Raza;
 import com.salesianostriana.dam.DiazGardunoPedro.model.Vaca;
 import com.salesianostriana.dam.DiazGardunoPedro.repository.RazaRepository;
 import com.salesianostriana.dam.DiazGardunoPedro.repository.VacaRepository;
-import com.salesianostriana.dam.DiazGardunoPedro.serviceBase.BaseService;
+import com.salesianostriana.dam.DiazGardunoPedro.serviceBase.BaseServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class RazaService extends BaseService<Raza, Long, RazaRepository> {
+public class RazaService extends BaseServiceImpl<Raza, Long, RazaRepository> {
 
 	private final VacaRepository vacaRepository;
 	
@@ -29,7 +30,7 @@ public class RazaService extends BaseService<Raza, Long, RazaRepository> {
 		
 	}  
 	
-	public Raza findPorId(Long id) {
+	public Optional<Raza> findPorId(Long id) {
 	    return findById(id);
 	}
 
@@ -53,14 +54,14 @@ public class RazaService extends BaseService<Raza, Long, RazaRepository> {
 		
 	}
 	
-	public Raza putRaza (Raza r) {
-		Raza raza = findById(r.getId());
-		if (raza != null) {
-			raza.setNombre(r.getNombre());
-			return edit(raza);
-		}
-		return null;
+	
+	public Optional<Raza> putRaza (Raza r) {
+		
+		return Optional.of(edit(r));
+	
+	
 	}
+		
 	
 
 

@@ -106,10 +106,8 @@
                         </a>
                     </div>
                     </div>
-                </div>
-
                 <!-- Modal EDITAR Raza -->
-                <div class="modal fade" th:id="editRazaModal__${raza.id}" tabindex="-1" aria-labelledby="editRazaLabel__${raza.id}" aria-hidden="true">
+                <div class="modal fade" th:id="'editRazaModal__'+${raza.id}" tabindex="-1" aria-labelledby="editRazaLabel__${raza.id}" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -190,7 +188,7 @@
         </div>
     </div>
 
-    <footer th:replace="fragments/footer :: footer"></footer>
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
 
 </body>
 </html>
