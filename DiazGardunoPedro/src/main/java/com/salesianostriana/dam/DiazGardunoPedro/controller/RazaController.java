@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.DiazGardunoPedro.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.salesianostriana.dam.DiazGardunoPedro.model.Raza;
@@ -79,6 +81,16 @@ public class RazaController {
 	    
 	    return "razas/listadoPorRazas"; 
 	}
+	
+	@GetMapping("/buscar")
+	public String buscarRazas(@RequestParam("nombre") String nombre, Model model) {
+	    List<Raza> resultados = razaService.findByNombreContainsIgnoreCase(nombre);
+	   
+	    model.addAttribute("TodasRazas", resultados);
+	    model.addAttribute("razaForm", new Raza());
+	    return "razas/listado"; 
+	}
+
 	
 	
 	

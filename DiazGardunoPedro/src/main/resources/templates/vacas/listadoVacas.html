@@ -78,10 +78,15 @@
             </div>
 
             <div class="dropdown">
-                <button class="btn btn-outline-success  px-4 me-2" type="button">
-                    <i class="bi bi-search me-2"></i>
-                    <input type="text" class="form-control" id="buscador" placeholder="Buscar vaca">
-                </button>
+                <form th:action="@{/vacas/buscar}" method="get" class="d-flex">
+                    <input type="number" name="numIdentificacion" class="form-control" placeholder="Buscar vaca" />
+                    <button class="btn btn-outline-success ms-2" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+                <div th:if="${#lists.isEmpty(TodasVacas)}" class="alert alert-info">
+                    No se encontraron vacas con ese número.
+                </div>
 
                 <button class="btn btn-success rounded-pill px-4" data-bs-toggle="dropdown">
                     <i class="bi bi-gear-wide-connected me-2"></i>Acciones
@@ -110,7 +115,7 @@
             <div class="col-12 col-md-6 col-lg-4"  th:each="vaca : ${TodasVacas}">
                 <div class="card cow-card h-100">
                     <div class="card-header bg-success text-white py-3">
-                        <h3 class="h5 mb-0">Identificación <span th:text="${vaca.numIdentificacion}"></span></h3>
+                        <h3 class="h5 mb-0">Identificación <span th:text="${vaca.numIdentificacion}" th:value="${vaca.numIdentificacion}"></span></h3>
                     </div>
                     <div class="card-body">
                         <div class="cow-info mb-3">
@@ -151,7 +156,8 @@
                                 <div class="modal-body">
                                     <div class="mb-3">
                                         <label class="form-label">Número de Identificación</label>
-                                        <h3 th:text="${vaca.numIdentificacion}"></h3>
+                                        <input type="text" class="form-control" 
+                                            th:value="${vaca.numIdentificacion}" name="numIdentificacion" id="numIdentificacion" readonly>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Peso (kg)</label>

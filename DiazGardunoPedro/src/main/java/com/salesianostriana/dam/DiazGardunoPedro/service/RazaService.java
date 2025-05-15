@@ -62,8 +62,6 @@ public class RazaService extends BaseServiceImpl<Raza, Long, RazaRepository> {
 	
 	}
 		
-	
-
 
 	public void deleteRaza(Long id, Long idRazaSinCat) {
 		Raza razaEliminar = repositorio.findById(id).orElseThrow(()
@@ -82,5 +80,13 @@ public class RazaService extends BaseServiceImpl<Raza, Long, RazaRepository> {
 		delete(razaEliminar);
 
 	}
+	
+	
+	public List<Raza> findByNombreContainsIgnoreCase(String nombre) {
+		return repositorio.findByNombreContainsIgnoreCase(nombre);
+	}
+	
+	
+	
 }
 

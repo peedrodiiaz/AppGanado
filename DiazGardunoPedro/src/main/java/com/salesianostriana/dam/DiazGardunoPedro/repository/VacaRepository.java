@@ -13,5 +13,8 @@ import lombok.RequiredArgsConstructor;
 
 @Repository
 public interface VacaRepository extends JpaRepository<Vaca, Long> {
+	
+	List<Vaca> findByNumIdentificacion(int numIdentificacion);
+	
 	List<Vaca> findByRaza(Raza raza);
 }

@@ -47,7 +47,7 @@ public class VacaService extends BaseServiceImpl<Vaca, Long, VacaRepository> {
 	    }
 
 	    return save(vaca);
-		
+	  	
 	}
 	
 	public Vaca mostrarFormulario(Model m) {
@@ -69,6 +69,12 @@ public class VacaService extends BaseServiceImpl<Vaca, Long, VacaRepository> {
 		 deleteById(id);
 		
 	}
+	
+	public List<Vaca> findByNumIdentificacion(int numIdentificacion) {
+		return repositorio.findByNumIdentificacion(numIdentificacion);
+	}
+	
+	
 	
 	public List<Vaca> obtenerVacasOrdenadas(String criterio) {
 	    List<Vaca> vacas = findAll();

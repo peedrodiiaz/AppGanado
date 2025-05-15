@@ -60,10 +60,17 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="h3 text-success"><i class="bi bi-database me-2"></i>Razas Registradas</h2>
             <div class="dropdown">
-                <button class="btn btn-outline-success  px-4 me-2" type="button">
-                    <i class="bi bi-search me-2"></i>
-                    <input type="text" class="form-control" id="buscador" placeholder="Buscar raza">
-                </button>
+                
+                <form th:action="@{/razas/buscar}" method="get" class="d-flex">
+                    <input type="text" name="nombre" class="form-control" placeholder="Buscar raza" />
+                    <button class="btn btn-outline-success ms-2" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+                <div th:if="${#lists.isEmpty(TodasRazas)}" class="alert alert-info">
+                    No se encontraron razas con ese nombre.
+                </div>
+                
                 <button class="btn btn-success rounded-pill px-4" data-bs-toggle="dropdown">
                     <i class="bi bi-gear-wide-connected me-2"></i>Acciones
                 </button>
