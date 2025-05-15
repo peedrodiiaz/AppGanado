@@ -32,11 +32,11 @@ public class VacaService extends BaseServiceImpl<Vaca, Long, VacaRepository> {
 		LocalDate hoy = LocalDate.now();
 		boolean  existe;
 	    
-	    if (vaca.getFechaNacimiento().isAfter(hoy)) {
+	    if (vaca.getFechaNacimiento() != null && vaca.getFechaNacimiento().isAfter(hoy)) {
 	        throw new IllegalArgumentException("La fecha de nacimiento no puede ser posterior a hoy.");
 	    }
 	    
-	    if (vaca.getFechaParto().isAfter(hoy)) {
+	    if ( vaca.getFechaParto() != null && vaca.getFechaParto().isAfter(hoy) ) {
 	        throw new IllegalArgumentException("La fecha de parto no puede ser posterior a hoy .");
 	    }
 	    
@@ -80,7 +80,7 @@ public class VacaService extends BaseServiceImpl<Vaca, Long, VacaRepository> {
 	public List<Vaca> obtenerVacasOrdenadas(String criterio) {
 	    List<Vaca> vacas = findAll();
 
-	    Comparator<Vaca> comparator = switch (criterio) {
+	    Comparator<Vaca> comparator = switch (criterio) {	
 	        case "pesoDesc" -> Comparator.comparingDouble(Vaca::getPeso).reversed();
 	        case "pesoAsc" -> Comparator.comparingDouble(Vaca::getPeso);
 	        case "edadDesc" -> Comparator.comparing(Vaca::getFechaNacimiento);
