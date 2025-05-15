@@ -30,17 +30,17 @@ public class VacaService extends BaseServiceImpl<Vaca, Long, VacaRepository> {
 	public Vaca addVaca (Vaca vaca) {
 
 		LocalDate hoy = LocalDate.now();
-
+		boolean  existe;
 	    
-	    if (vaca.getFechaNacimiento() != null && vaca.getFechaNacimiento().isAfter(hoy)) {
+	    if (vaca.getFechaNacimiento().isAfter(hoy)) {
 	        throw new IllegalArgumentException("La fecha de nacimiento no puede ser posterior a hoy.");
 	    }
 	    
-	    if (vaca.getFechaParto() != null && vaca.getFechaParto().isAfter(hoy)) {
+	    if (vaca.getFechaParto().isAfter(hoy)) {
 	        throw new IllegalArgumentException("La fecha de parto no puede ser posterior a hoy .");
 	    }
 	    
-	    boolean existe = findAll().stream()
+	    existe = findAll().stream()
 	            .anyMatch(v -> v.getNumIdentificacion() == vaca.getNumIdentificacion());
 	    if (existe) {
 	        throw new IllegalArgumentException("Ya existe una vaca con ese número de identificación.");
