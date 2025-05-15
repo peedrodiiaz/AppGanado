@@ -86,9 +86,9 @@ public class VacaController {
 	    
 	    @GetMapping("/buscar")
 	    public String buscarVacas(@RequestParam("numIdentificacion") int numIdentificacion, Model model) {
+	    	
 	        List<Vaca> resultados = vacaService.findByNumIdentificacion(numIdentificacion);
-	        System.out.println(resultados);
-	        System.out.println(numIdentificacion);
+	        
 	        model.addAttribute("TodasVacas", resultados);
 	        model.addAttribute("TodasRazas", razaService.getListRaza());
 	        model.addAttribute("vaca", new Vaca());

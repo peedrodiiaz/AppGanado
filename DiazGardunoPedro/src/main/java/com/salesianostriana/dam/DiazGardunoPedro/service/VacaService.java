@@ -71,6 +71,7 @@ public class VacaService extends BaseServiceImpl<Vaca, Long, VacaRepository> {
 	}
 	
 	public List<Vaca> findByNumIdentificacion(int numIdentificacion) {
+		
 		return repositorio.findByNumIdentificacion(numIdentificacion);
 	}
 	

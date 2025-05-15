@@ -56,7 +56,13 @@ public class RazaService extends BaseServiceImpl<Raza, Long, RazaRepository> {
 	
 	
 	public Optional<Raza> putRaza (Raza r) {
-		
+		List<Raza> razas = findAll();
+		String nombreRaza = r.getNombre().trim();
+		for (Raza raza : razas) {
+			if (raza.getNombre().equalsIgnoreCase(nombreRaza)) {
+				return Optional.empty();
+			}
+		}
 		return Optional.of(edit(r));
 	
 	
