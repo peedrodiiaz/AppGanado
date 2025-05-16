@@ -74,6 +74,7 @@ public class RazaController {
 	    
 	    if (raza.isPresent()) {
 	        model.addAttribute("raza", raza.get());
+			model.addAttribute("TodasRazass", razaService.getListRaza());
 	    } else {
 	        model.addAttribute("error", "Raza no encontrada");
 			

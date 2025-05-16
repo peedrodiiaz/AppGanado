@@ -1,26 +1,4 @@
-document.addEventListener ('keyup',e => {
-    if (e.key === 'Escape')e.target.value = ""
 
-    if (e.target.matches('#buscador')) {
-        document.querySelectorAll('.razas-card').forEach(raza => {
-            raza.textContent.toLowerCase().includes(e.target.value.toLowerCase())
-                ? raza.classList.remove('filtro')
-                : raza.classList.add('filtro')
-        })
-    }
-} )
-
-document.addEventListener ('keyup',e => {
-    if (e.key === 'Escape')e.target.value = ""
-    
-    if (e.target.matches('#buscador')) {
-        document.querySelectorAll('.cow-card').forEach(vaca => {
-            vaca.textContent.toLowerCase().includes(e.target.value.toLowerCase())
-                ? vaca.classList.remove('filtro')
-                : vaca.classList.add('filtro')
-        })
-    }
-} )
 
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('formDelete');

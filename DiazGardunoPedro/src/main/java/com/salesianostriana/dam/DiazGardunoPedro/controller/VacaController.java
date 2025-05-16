@@ -79,7 +79,7 @@ public class VacaController {
 	    public String listarVacasOrdenadas(@RequestParam("criterio") String criterio, Model model) {
 	        List<Vaca> vacasOrdenadas = vacaService.obtenerVacasOrdenadas(criterio);
 	        model.addAttribute("TodasVacas", vacasOrdenadas);
-	        model.addAttribute("TodasRazas", razaService.getListRaza()); 
+	        model.addAttribute("TodasRazass", razaService.getListRaza()); 
 	        model.addAttribute("vaca", new Vaca()); 
 	        return "vacas/listadoVacas"; 
 	    }

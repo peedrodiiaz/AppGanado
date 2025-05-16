@@ -40,11 +40,11 @@
 </head>
 <body class="bg-light d-flex flex-column min-vh-100">
     <header th:replace="~{fragments/header :: header}"></header>
-    <nav class="navbar navbar-expand-lg bg-white shadow-sm">
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm mt-5">
         <div class="container">
             <ul class="nav nav-pills nav-fill gap-3 w-100">
                 <li class="nav-item">
-                    <a class="nav-link btn-lg text-white bg-success" th:href="@{/vacas}">
+                    <a class="nav-link btn-lg text-white bg-success active" th:href="@{/vacas}">
                         <i class="bi bi-clipboard2-pulse me-2"></i>Gestión de Vacas
                     </a>
                 </li>
@@ -60,18 +60,92 @@
     <main class="container my-5">
         <h2 class="text-center text-primary mb-4" th:text="'Vacas de la raza: ' + ${raza.nombre}">Nombre Raza</h2>
 
-    <div class="row g-4 justify-content-center" th:if="${#lists.isEmpty(raza.listVacas) == false}">
-        <div class="col-md-6 col-lg-4" th:each="vaca : ${raza.listVacas}">
-            <div class="card border-success h-100">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="'Identificación: ' + ${vaca.numIdentificacion}">Identificación</h5>
-                    <p class="card-text"><strong>Peso:</strong> <span th:text="${vaca.peso}">0</span> kg</p>
-                    <p class="card-text"><strong>Nacimiento:</strong> <span th:text="${vaca.fechaNacimiento}">0</span></p>
-                    <p class="card-text"><strong>Último Parto:</strong> <span th:text="${vaca.fechaParto}">0</span></p>
+    <!-- Tabla de vacas por raza -->
+    <div th:if="${#lists.isEmpty(raza.listVacas) == false}">
+        <table class="table table-striped">
+            <thead class="bg-success text-white">
+                <tr>
+                    <th>Identificación</th>
+                    <th>Peso (kg)</th>
+                    <th>Nacimiento</th>
+                    <th>Último parto</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="vaca : ${raza.listVacas}">
+                    <td th:text="${vaca.numIdentificacion}">1234</td>
+                    <td th:text="${vaca.peso} + ' kg'">0 kg</td>
+                    <td th:text="${vaca.fechaNacimiento} ?: 'No registrado'">—</td>
+                    <td th:text="${vaca.fechaParto} ?: 'Vaca sin parto'">—</td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-primary"
+                                data-bs-toggle="modal"
+                                th:attr="data-bs-target='#editVacaModal_' + ${vaca.id}">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Editar  vaca -->
+    <!-- Modal editar vaca -->
+    <div th:each="vaca : ${raza.listVacas}">
+        <div class="modal fade" th:id="'editVacaModal_' + ${vaca.id}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar Vaca</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form th:action="@{/vacas/editarVaca/{id}(id=${vaca.id})}" method="post">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Número de Identificación</label>
+                                <input type="text" class="form-control"
+                                    th:value="${vaca.numIdentificacion}" name="numIdentificacion" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Peso (kg)</label>
+                                <input type="number" step="0.1" class="form-control"
+                                    th:value="${vaca.peso}" name="peso" min="1" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Fecha de Nacimiento</label>
+                                <input type="date" class="form-control"
+                                    th:value="${vaca.fechaNacimiento}" name="fechaNacimiento"
+                                    th:max="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Fecha de Último Parto</label>
+                                <input type="date" class="form-control"
+                                    th:value="${vaca.fechaParto}" name="fechaParto"
+                                    th:max="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Raza</label>
+                                <select class="form-select" th:field="*{raza.nombre}" required>
+                                    <option th:each="raza : ${TodasRazass}"
+                                            th:if="${raza.nombre != 'Raza por defecto'}"
+                                            th:value="${raza.id}" 
+                                            th:text="${raza.nombre}"
+                                            th:selected="${vaca.raza.id == vaca.raza.id}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Guardar cambios</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
+
 
     <div th:if="${#lists.isEmpty(raza.listVacas)}" class="alert alert-warning text-center mt-5">
         Esta raza no tiene vacas registradas aún.

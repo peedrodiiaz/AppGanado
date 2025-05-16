@@ -24,12 +24,11 @@
 <body class="bg-light">
     
     <header th:replace="~{fragments/header :: header}"></header>
-    
-    <nav class="navbar navbar-expand-lg bg-white shadow-sm">
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm mt-5">
         <div class="container">
             <ul class="nav nav-pills nav-fill gap-3 w-100">
                 <li class="nav-item">
-                    <a class="nav-link btn-lg text-white bg-success" th:href="@{/vacas}">
+                    <a class="nav-link btn-lg text-white bg-success active" th:href="@{/vacas}">
                         <i class="bi bi-clipboard2-pulse me-2"></i>Gestión de Vacas
                     </a>
                 </li>
@@ -41,7 +40,6 @@
             </ul>
         </div>
     </nav>
-
 
     <main class="container my-5">
         <div class="row g-4">
