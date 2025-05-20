@@ -17,19 +17,22 @@ INSERT INTO raza (id, nombre) VALUES (14, 'Pirenaica');
 ALTER TABLE raza ALTER COLUMN id RESTART WITH 15;
 
 INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (1, 650.4, 1001, '2020-05-15', '2023-11-10', 1, false, 0.0);
-INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (2, 700.0, 1002, '2019-03-20', '2023-11-10', 2, false, 0.0);
-INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (3, 720.5, 1003, '2018-07-25', '2023-11-10', 3, false, 0.0);
-INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (4, 680.2, 1004, '2017-11-30', '2023-11-10', 4, false, 0.0);
-INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (5, 750.0, 1005, '2016-02-15', '2023-11-10', 5, false, 0.0);
-INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (6, 720.0, 1006, '2015-08-10', '2023-11-10', 6, false, 0.0);
-INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (7, 680.0, 1007, '2014-12-05', '2023-11-10', 7, false, 0.0);
-INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (8, 700.0, 1008, '2013-06-15', '2023-11-10', 8, false, 0.0);
-INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (9, 690.0, 1009, '2012-04-20', '2023-11-10', 9, false, 0.0);
-INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (10, 710.0, 1010, '2011-09-30', '2023-11-10', 10, false, 0.0);
-INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (11, 730.0, 1011, '2010-01-15', '2023-11-10', 11, false, 0.0);
-INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (12, 740.0, 1012, '2009-03-25', '2023-11-10', 12, false, 0.0);
-INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (13, 750.0, 1013, '2008-07-10', '2023-11-10', 13, false, 0.0);
-INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (14, 760.0, 1014, '2007-11-20', '2023-11-10', 14, false, 0.0);
-INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (15, 770.0, 1015, '2006-05-30', '2023-11-10', 1, false, 0.0);
+INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (1, 650.4, 1001, '2020-05-15', '2023-11-10', 1, false, 0.0);
+INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (2, 700.0, 1002, '2019-03-20', '2022-09-15', 2, true, 1200.0);
+INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (3, 680.5, 1003, '2021-01-10', '2023-12-01', 3, false, 0.0);
+INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (4, 720.2, 1004, '2018-07-25', '2021-10-30', 4, true, 1350.0);
+INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (5, 690.0, 1005, '2020-11-05', '2023-08-20', 5, false, 0.0);
+INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (6, 710.8, 1006, '2019-06-18', '2022-12-12', 6, true, 1280.0);
+INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (7, 675.3, 1007, '2021-02-22', '2023-11-05', 7, false, 0.0);
+INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (8, 730.0, 1008, '2018-09-30', '2021-11-15', 8, true, 1400.0);
+INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (9, 695.5, 1009, '2020-04-12', '2023-10-25', 9, false, 0.0);
+INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (10, 720.0, 1010, '2019-08-05', '2022-07-30', 10, true, 1300.6);
+INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (11, 680.0, 1011, '2021-03-15', '2023-09-20', 11, false, 0.0);
+INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (12, 710.5, 1012, '2018-12-01', '2021-08-10', 12, true, 1250.0);
+INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (13, 695.0, 1013, '2020-06-20', '2023-11-01', 13, false, 0.0);
+INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (14, 740.0, 1014, '2019-02-15', '2022-10-05', 14, true, 1450.0);
+INSERT INTO vaca (id, peso, num_identificacion, fecha_nacimiento, fecha_parto, raza_id, vendida, precio_venta) VALUES (15, 685.0, 1015, '2021-05-10', '2023-12-15', 1, false, 0.0);	
+
+
 
 ALTER TABLE vaca ALTER COLUMN id RESTART WITH 16;

@@ -3,11 +3,14 @@ package com.salesianostriana.dam.DiazGardunoPedro.service;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.salesianostriana.dam.DiazGardunoPedro.model.Raza;
 import com.salesianostriana.dam.DiazGardunoPedro.model.Vaca;
 import com.salesianostriana.dam.DiazGardunoPedro.repository.VacaRepository;
 import com.salesianostriana.dam.DiazGardunoPedro.serviceBase.BaseServiceImpl;
@@ -36,7 +39,7 @@ public class VacaService extends BaseServiceImpl<Vaca, Long, VacaRepository> {
 	        throw new IllegalArgumentException("La fecha de nacimiento no puede ser posterior a hoy.");
 	    }
 	    
-	    if ( vaca.getFechaParto() != null && vaca.getFechaParto().isAfter(vaca.getFechaNacimiento()) ) {
+	    if ( vaca.getFechaParto() != null && vaca.getFechaParto().isBefore(vaca.getFechaNacimiento()) ) {
 	        throw new IllegalArgumentException("La fecha de parto no puede ser posterior a la fecha de nacimiento .");
 	    }
 	    
@@ -71,10 +74,17 @@ public class VacaService extends BaseServiceImpl<Vaca, Long, VacaRepository> {
 	
 	public Optional<Vaca> putVaca(Vaca v) {
 
-		
-		if ( v.getFechaParto() != null && v.getFechaParto().isAfter(v.getFechaNacimiento()) ) {
+		System.out.println(v);
+		if ( v.getFechaParto().isBefore(v.getFechaNacimiento()) ) {
 		        throw new IllegalArgumentException("La fecha de parto no puede ser posterior a la fecha de nacimiento .");
+		        
 		    }
+		if (v.isVendida() && v.getPrecioVenta() <= 0) {
+	        throw new IllegalArgumentException("Has marcado la vaca como vendida, pero no has puesto un precio de venta.");
+	    }
+	    if (!v.isVendida() && v.getPrecioVenta() > 0) {
+	        throw new IllegalArgumentException("Has puesto un precio de venta, pero no has marcado la vaca como vendida.");
+	    }
 	    if (v.isVendida()) {
 	        if (v.getPrecioVenta() <= 0) {
 	            return Optional.empty(); 
@@ -119,6 +129,35 @@ public class VacaService extends BaseServiceImpl<Vaca, Long, VacaRepository> {
 	    vacas.sort(comparator);
 	    return vacas;
 	}
+	
+    public double calcularTotalVentas() {
+        return findAll().stream()
+            .filter(Vaca::isVendida)
+            .mapToDouble(Vaca::getPrecioVenta)
+            .sum();
+    }
+
+    public double calcularMediaVentas() {
+        List<Double> ventas = findAll().stream()
+            .filter(Vaca::isVendida)
+            .map(Vaca::getPrecioVenta)
+            .collect(Collectors.toList());
+
+        return ventas.isEmpty() ? 0.0 :
+            ventas.stream().mapToDouble(Double::doubleValue).average().orElse(0.0);
+    }
+
+    public double calcularMediaVentasPorRaza(Long razaId) {
+        List<Double> ventas = findAll().stream()
+            .filter(v -> v.isVendida() && v.getRaza().getId() == razaId)
+            .map(Vaca::getPrecioVenta)
+            .collect(Collectors.toList());
+
+        return ventas.isEmpty() ? 0.0 :
+            ventas.stream().mapToDouble(Double::doubleValue).average().orElse(0.0);
+    }
+
+   
 	
 	
 	

@@ -103,6 +103,11 @@
                             <i class="bi bi-trash me-2"></i>Eliminar Vaca
                         </a>
                     </li>
+                    <li>
+                        <a class="dropdown-item" th:href="@{/vacas/estadisticas}">
+                        <i class="bi bi-bar-chart-line me-2 text-primary"></i>Ver estadísticas de ventas
+                        </a>
+                    </li>
                     
                 </ul>
             </div>
@@ -205,19 +210,20 @@
                                         <div class="mb-3">
                                             <label class="form-label">Vendida</label>
                                             <select class="form-select" th:value="vaca.vendida" name="vendida" id="vendida">
-                                                <option  value="true" selected>Vendida</option>
-                                                <option  value="false" selected>No Vendida</option>
+                                                <option value="true" th:selected="${vaca.vendida == true}">Vendida</option>
+                                                <option value="false" th:selected="${vaca.vendida == false}">No Vendida</option>
+
                                             </select>
                                         </div>
                                         <div class="mb-3" th:if="${vaca.vendida}">
                                             <label class="form-label">Precio de Venta (€)</label>
                                             <input type="number" class="form-control" 
-                                                th:value="${vaca.precioVenta}" name="precioVenta" id="precioVenta" min="1" required>
+                                                th:value="${vaca.precioVenta}" name="precioVenta" id="precioVenta" min="1" step="0.01" required>
                                         </div>
                                         <div class="mb-3" th:unless="${vaca.vendida}">
                                             <label class="form-label">Precio de Venta (€)</label>
                                             <input type="number" class="form-control" 
-                                                name="precioVenta" id="precioVenta" value="0" >
+                                                name="precioVenta" id="precioVenta" value="0" step="0.01">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
