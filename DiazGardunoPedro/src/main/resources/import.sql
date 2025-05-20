@@ -1,7 +1,7 @@
 INSERT INTO raza (id,nombre) VALUES (1,'Limusina');
 INSERT INTO raza (id,nombre) VALUES (2,'Charolesa');
 INSERT INTO raza (id,nombre) VALUES (3,'Retinta');
-INSERT INTO raza (id,nombre) VALUES (4,'Raza por defecto');
+INSERT INTO raza (id,nombre) VALUES (4,'Raza sin definir');
 INSERT INTO raza (id, nombre) VALUES (5, 'Avileña-Negra Ibérica');
 INSERT INTO raza (id, nombre) VALUES (6, 'Morucha');
 INSERT INTO raza (id, nombre) VALUES (7, 'Rubia Gallega');

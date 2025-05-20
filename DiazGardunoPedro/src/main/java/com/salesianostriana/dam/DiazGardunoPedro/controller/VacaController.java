@@ -2,6 +2,7 @@ package com.salesianostriana.dam.DiazGardunoPedro.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.LongFunction;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.salesianostriana.dam.DiazGardunoPedro.model.Raza;
 import com.salesianostriana.dam.DiazGardunoPedro.model.Vaca;
 import com.salesianostriana.dam.DiazGardunoPedro.service.RazaService;
 import com.salesianostriana.dam.DiazGardunoPedro.service.VacaService;
@@ -30,6 +32,7 @@ public class VacaController {
 	    public String listarVacas(Model model) {
 	        model.addAttribute("TodasVacas", vacaService.findAll());
 	        model.addAttribute("TodasRazas", razaService.getListRaza());
+	        model.addAttribute("vacaEditarRazaId", 0);
 	        model.addAttribute("vaca", new Vaca());
 	        return "vacas/listadoVacas";
 	    }
@@ -56,8 +59,8 @@ public class VacaController {
 	    
 	    
 	    @PostMapping("/editarVaca/{id}")
-	    public String editarVaca(@PathVariable Long id, @ModelAttribute("TodasVacas") Vaca r) {
-	
+	    public String editarVaca(@PathVariable Long id, @ModelAttribute("vaca") Vaca r, @ModelAttribute("vacaEditarRazaId") long razaId) {
+	      r.setRaza(razaService.findPorId(razaId).get());
 	  	  Optional<Vaca> vaca = vacaService.putVaca(r);
 	        if (vaca.isPresent()) {
 	            return "redirect:/vacas";
@@ -79,7 +82,7 @@ public class VacaController {
 	    public String listarVacasOrdenadas(@RequestParam("criterio") String criterio, Model model) {
 	        List<Vaca> vacasOrdenadas = vacaService.obtenerVacasOrdenadas(criterio);
 	        model.addAttribute("TodasVacas", vacasOrdenadas);
-	        model.addAttribute("TodasRazass", razaService.getListRaza()); 
+	        model.addAttribute("TodasRazas", razaService.getListRaza()); 
 	        model.addAttribute("vaca", new Vaca()); 
 	        return "vacas/listadoVacas"; 
 	    }

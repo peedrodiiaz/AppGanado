@@ -85,8 +85,8 @@ public class VacaService extends BaseServiceImpl<Vaca, Long, VacaRepository> {
 	        case "pesoAsc" -> Comparator.comparingDouble(Vaca::getPeso);
 	        case "edadDesc" -> Comparator.comparing(Vaca::getFechaNacimiento);
 	        case "edadAsc" -> Comparator.comparing(Vaca::getFechaNacimiento).reversed();
-	        case "partoReciente" -> Comparator.comparing(Vaca::getFechaParto).reversed();
-	        case "partoAntiguo" -> Comparator.comparing(Vaca::getFechaParto);
+	        case "partoReciente" -> Comparator.comparing(Vaca::getFechaParto, Comparator.nullsLast(LocalDate::compareTo)).reversed();
+	        case "partoAntiguo" -> Comparator.comparing(Vaca::getFechaParto,Comparator.nullsLast(LocalDate::compareTo));
 	        default -> throw new IllegalArgumentException("Criterio de orden no válido: " + criterio);
 	    };
 

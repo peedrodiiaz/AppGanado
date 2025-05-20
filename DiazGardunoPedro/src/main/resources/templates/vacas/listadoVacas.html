@@ -40,7 +40,7 @@
 <body class="bg-light d-flex flex-column min-vh-100">
 
     <header th:replace="~{fragments/header :: header}"></header>
-    <nav class="navbar navbar-expand-lg bg-white shadow-sm mt-5">
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm ">
         <div class="container">
             <ul class="nav nav-pills nav-fill gap-3 w-100">
                 <li class="nav-item">
@@ -80,7 +80,7 @@
             <div class="dropdown">
                 <form th:action="@{/vacas/buscar}" method="get" class="d-flex">
                     <input type="number" name="numIdentificacion" class="form-control" placeholder="Buscar vaca" required/>
-                    <button class="btn btn-outline-success ms-2" type="submit">
+                    <button class="btn btn-outline-success ms-2 " type="submit">
                         <i class="bi bi-search"></i>
                     </button>
                 </form>
@@ -88,7 +88,7 @@
                     No se encontraron vacas con ese número.
                 </div>
 
-                <button class="btn btn-success rounded-pill px-4" data-bs-toggle="dropdown">
+                <button class="btn btn-success rounded-pill px-4 mt-3" data-bs-toggle="dropdown">
                     <i class="bi bi-gear-wide-connected me-2"></i>Acciones
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end shadow">
@@ -177,9 +177,9 @@
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Raza</label>
-                                            <select class="form-select" th:field="${vaca.raza}" required>
+                                            <select class="form-select" th:value="vaca.raza.id"  name="vacaEditarRazaId" required>
                                                 <option th:each="raza : ${TodasRazas}" 
-                                                        th:if="${raza.nombre != 'Raza por defecto'}"
+                                                        th:if="${raza.nombre != 'Raza sin definir'}"
                                                         th:value="${raza.id}"
                                                         th:text="${raza.nombre}"
                                                         th:selected="${raza.id == vaca.raza.id}">
@@ -238,8 +238,8 @@
                         <div class="mb-3">
                             <label class="form-label">Raza</label>
                             <select class="form-select" th:field="*{raza.id}" required>
-                                <option th:each="raza : ${TodasRazass}" 
-                                        th:if="${raza.nombre != 'Raza por defecto'}"
+                                <option th:each="raza : ${TodasRazas}" 
+                                        th:if="${raza.nombre != 'Raza sin definir'}"
                                         th:value="${raza.id}"
                                         th:text="${raza.nombre}">
                                 </option>
@@ -287,7 +287,7 @@
     </div>
 
 
-        <footer th:replace="~{fragments/footer :: footer}"></footer>
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
 
     
 </body>

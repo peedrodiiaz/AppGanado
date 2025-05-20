@@ -71,8 +71,8 @@
                     No se encontraron razas con ese nombre.
                 </div>
                 
-                <button class="btn btn-success rounded-pill px-4" data-bs-toggle="dropdown">
-                    <i class="bi bi-gear-wide-connected me-2"></i>Acciones
+                <button class="btn btn-success rounded-pill px-4 mt-3" data-bs-toggle="dropdown">
+                    <i class="bi bi-gear-wide-connected me-2 " ></i>Acciones
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end shadow">
                     <li>
@@ -95,7 +95,7 @@
 
         <!-- Tarjetas -->
         <div class="row g-4">
-            <div class="col-12 col-md-6 col-lg-4" th:each="raza : ${TodasRazas}" th:if="${raza.nombre} != 'Raza por defecto'">
+            <div class="col-12 col-md-6 col-lg-4" th:each="raza : ${TodasRazas}" th:if="${raza.nombre} != 'Raza sin definir'">
                 <div class="card breed-card h-100 razas-card">
                     <div class="card-header bg-orange text-dark py-3">
                         <h3 class="h5 mb-0" th:text="${raza.nombre}">Nombre Raza</h3>
@@ -180,7 +180,7 @@
                             <select class="form-select" id="selectRaza" required>
                                 <option value="" disabled selected>Seleccione una raza</option>
                                 <option th:each="raza : ${TodasRazas}"
-                                        th:if="${raza.nombre} != 'Raza por defecto'"
+                                        th:if="${raza.nombre} != 'Raza sin definir'"
                                         th:value="${raza.id}" th:text="${raza.nombre}" th:attr="data-id=${raza.id}">
                                 </option>
                             </select>
