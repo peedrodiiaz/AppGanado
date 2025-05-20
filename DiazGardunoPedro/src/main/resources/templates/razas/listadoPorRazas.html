@@ -56,7 +56,13 @@
             </ul>
         </div>
     </nav>
+    <div th:if="${error}" class="alert alert-danger" role="alert">
+            <p th:text="${error}"></p>
+        </div>
 
+        <div th:if="${param.error}" class="alert alert-danger mt-3" role="alert">
+            <p th:text="${param.error}"></p>
+        </div>
     <main class="container my-5">
         <h2 class="text-center text-primary mb-4" th:text="'Vacas de la raza: ' + ${raza.nombre}">Nombre Raza</h2>
 
@@ -133,6 +139,23 @@
                                             th:selected="${raza2.id == vaca.raza.id}">
                                     </option>
                                 </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Vendida</label>
+                                <select class="form-select" th:value="vaca.vendida" name="vendida" id="vendida">
+                                    <option  value="true" selected>Vendida</option>
+                                    <option  value="false" selected>No Vendida</option>
+                                </select>
+                            </div>
+                            <div class="mb-3" th:if="${vaca.vendida}">
+                                <label class="form-label">Precio de Venta (€)</label>
+                                <input type="number" class="form-control" 
+                                    th:value="${vaca.precioVenta}" name="precioVenta" id="precioVenta" min="1" required>
+                            </div>
+                            <div class="mb-3" th:unless="${vaca.vendida}">
+                                <label class="form-label">Precio de Venta (€)</label>
+                                <input type="number" class="form-control" 
+                                    name="precioVenta" id="precioVenta" value="0" >
                             </div>
                         </div>
                         <div class="modal-footer">

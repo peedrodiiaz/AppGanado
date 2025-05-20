@@ -72,7 +72,8 @@
                         <option value="edadAsc" th:selected="${param.criterio == 'edadAsc'}">Más jóvenes</option>
                         <option value="partoReciente" th:selected="${param.criterio == 'partoReciente'}">Parto más reciente</option>
                         <option value="partoAntiguo" th:selected="${param.criterio == 'partoAntiguo'}">Parto más antiguo</option>
-                        
+                        <option value="precioVentaDesc" th:selected="${param.criterio == 'precioVentaDesc'}">Precio venta descendente</option>
+                        <option value="precioVentaAsc" th:selected="${param.criterio == 'precioVentaAsc'}">Precio venta ascendente</option>                        
                     </select>
                 </form>
             </div>
@@ -110,6 +111,10 @@
         <div th:if="${error}" class="alert alert-danger" role="alert">
             <p th:text="${error}"></p>
         </div>
+
+        <div th:if="${param.error}" class="alert alert-danger mt-3" role="alert">
+            <p th:text="${param.error}"></p>
+        </div>
         <div>
             <table class="table table-striped">
                 <thead class="bg-success text-white">
@@ -119,6 +124,8 @@
                     <th>Nacimiento</th>
                     <th>Último parto</th>
                     <th>Raza</th>
+                    <th>Vendida</th>
+                    <th>Precio de venta</th>
                     <th>Acciones</th>
                     </tr>
                 </thead>
@@ -129,7 +136,16 @@
                     <td th:text="${vaca.fechaNacimiento} ?: 'No registrado'">—</td>
                     <td th:text="${vaca.fechaParto} ?: 'Vaca sin parto'">—</td>
                     <td th:text="${vaca.raza.nombre}" >Raza</td>
-                        <td>
+                    <td>
+                        <span th:if="${vaca.vendida}" class="badge bg-success">Vendida</span>
+                        <span th:if="${!vaca.vendida}" class="badge bg-danger">No Vendida</span>
+                    </td>
+                    <td>
+                        <span th:if="${vaca.precioVenta != null}" th:text="${vaca.precioVenta} + ' €'">0 €</span>
+                        <span th:if="${vaca.precioVenta == null}" class="text-muted">No disponible</span>
+                    </td>
+                        
+                    <td>
                         <button type="button" class="btn btn-sm btn-primary me-2"
                                 data-bs-toggle="modal"
                                 th:attr="data-bs-target='#editVacaModal_' + ${vaca.id}">
@@ -186,6 +202,23 @@
                                                 </option>
                                             </select>
                                         </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Vendida</label>
+                                            <select class="form-select" th:value="vaca.vendida" name="vendida" id="vendida">
+                                                <option  value="true" selected>Vendida</option>
+                                                <option  value="false" selected>No Vendida</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3" th:if="${vaca.vendida}">
+                                            <label class="form-label">Precio de Venta (€)</label>
+                                            <input type="number" class="form-control" 
+                                                th:value="${vaca.precioVenta}" name="precioVenta" id="precioVenta" min="1" required>
+                                        </div>
+                                        <div class="mb-3" th:unless="${vaca.vendida}">
+                                            <label class="form-label">Precio de Venta (€)</label>
+                                            <input type="number" class="form-control" 
+                                                name="precioVenta" id="precioVenta" value="0" >
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -200,6 +233,9 @@
             
         </div>
     </main>
+
+    
+
 
     <!-- Añadir Vaca -->
     <div class="modal fade" id="addVaca" tabindex="-1" aria-hidden="true">
@@ -244,6 +280,23 @@
                                         th:text="${raza.nombre}">
                                 </option>
                             </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Vendida</label>
+                            <select class="form-select" th:field="*{vendida}" required>
+                                <option value="true">Vendida</option>
+                                <option value="false">No Vendida</option>
+                            </select>
+                        </div>   
+                        <div class="mb-3" th:if="${vaca.vendida}">
+                            <label class="form-label">Precio de Venta (€)</label>
+                            <input type="number" class="form-control" 
+                            th:value="${vaca.precioVenta}" name="precioVenta" id="precioVenta" min="1" required>
+                        </div>
+                        <div class="mb-3" th:unless="${vaca.vendida}">
+                            <label class="form-label">Precio de Venta (€)</label>
+                            <input type="number" class="form-control" 
+                            name="precioVenta" id="precioVenta" value="0" >
                         </div>
                     </div>
                     <div class="modal-footer">

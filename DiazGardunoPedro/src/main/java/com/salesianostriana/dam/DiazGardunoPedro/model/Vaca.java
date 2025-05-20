@@ -30,6 +30,8 @@ public class Vaca {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fechaParto;
 	
+	private boolean vendida;
+	private double precioVenta;
 	@ManyToOne
 	private Raza raza;
 	

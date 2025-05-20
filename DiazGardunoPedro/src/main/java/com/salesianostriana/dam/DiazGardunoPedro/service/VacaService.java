@@ -36,14 +36,26 @@ public class VacaService extends BaseServiceImpl<Vaca, Long, VacaRepository> {
 	        throw new IllegalArgumentException("La fecha de nacimiento no puede ser posterior a hoy.");
 	    }
 	    
-	    if ( vaca.getFechaParto() != null && vaca.getFechaParto().isAfter(hoy) ) {
-	        throw new IllegalArgumentException("La fecha de parto no puede ser posterior a hoy .");
+	    if ( vaca.getFechaParto() != null && vaca.getFechaParto().isAfter(vaca.getFechaNacimiento()) ) {
+	        throw new IllegalArgumentException("La fecha de parto no puede ser posterior a la fecha de nacimiento .");
 	    }
 	    
 	    existe = findAll().stream()
 	            .anyMatch(v -> v.getNumIdentificacion() == vaca.getNumIdentificacion());
 	    if (existe) {
 	        throw new IllegalArgumentException("Ya existe una vaca con ese número de identificación.");
+	    }
+	    if (vaca.isVendida() && vaca.getPrecioVenta() <= 0) {
+	        throw new IllegalArgumentException("Has marcado la vaca como vendida, pero no has puesto un precio de venta.");
+	    }
+	    if (!vaca.isVendida() && vaca.getPrecioVenta() > 0) {
+	        throw new IllegalArgumentException("Has puesto un precio de venta, pero no has marcado la vaca como vendida.");
+	    }
+			
+		
+
+	    if (!vaca.isVendida()) {
+	        vaca.setPrecioVenta(0); 
 	    }
 
 	    return save(vaca);
@@ -57,11 +69,23 @@ public class VacaService extends BaseServiceImpl<Vaca, Long, VacaRepository> {
 		
 	}
 	
-	public Optional<Vaca> putVaca (Vaca v) {
+	public Optional<Vaca> putVaca(Vaca v) {
+
 		
-		return Optional.of(edit(v));
-			
+		if ( v.getFechaParto() != null && v.getFechaParto().isAfter(v.getFechaNacimiento()) ) {
+		        throw new IllegalArgumentException("La fecha de parto no puede ser posterior a la fecha de nacimiento .");
+		    }
+	    if (v.isVendida()) {
+	        if (v.getPrecioVenta() <= 0) {
+	            return Optional.empty(); 
+	        }
+	    } else {
+	        v.setPrecioVenta(0); 
+	    }
+
+	    return Optional.of(edit(v));
 	}
+
 		
 	
 	public void deleteVaca (Long id) {
@@ -87,6 +111,8 @@ public class VacaService extends BaseServiceImpl<Vaca, Long, VacaRepository> {
 	        case "edadAsc" -> Comparator.comparing(Vaca::getFechaNacimiento).reversed();
 	        case "partoReciente" -> Comparator.comparing(Vaca::getFechaParto, Comparator.nullsLast(LocalDate::compareTo)).reversed();
 	        case "partoAntiguo" -> Comparator.comparing(Vaca::getFechaParto,Comparator.nullsLast(LocalDate::compareTo));
+	        case "precioVentaDesc" -> Comparator.comparingDouble(Vaca::getPrecioVenta).reversed();
+	        case "precioVentaAsc" -> Comparator.comparingDouble(Vaca::getPrecioVenta);
 	        default -> throw new IllegalArgumentException("Criterio de orden no válido: " + criterio);
 	    };
 

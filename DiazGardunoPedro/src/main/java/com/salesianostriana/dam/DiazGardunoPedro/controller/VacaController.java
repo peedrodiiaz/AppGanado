@@ -59,25 +59,47 @@ public class VacaController {
 	    
 	    
 	    @PostMapping("/editarVaca/{id}")
-	    public String editarVaca(@PathVariable Long id, @ModelAttribute("vaca") Vaca r, @ModelAttribute("vacaEditarRazaId") long razaId) {
-	      r.setRaza(razaService.findPorId(razaId).get());
-	  	  Optional<Vaca> vaca = vacaService.putVaca(r);
-	        if (vaca.isPresent()) {
+	    public String editarVaca(@PathVariable Long id, @ModelAttribute("vaca") Vaca r, @ModelAttribute("vacaEditarRazaId") long razaId, RedirectAttributes redirectAttributes) {
+	    	try {
+	    		 r.setRaza(razaService.findPorId(razaId).get());
+	   	  	  Optional<Vaca> vaca = vacaService.putVaca(r);
+	   	        if (vaca.isPresent()) {
+	   	            return "redirect:/vacas";
+	   	        }else {
+	   	        	 return "redirect:/vacas?error=Has marcado vendida, pero no has puesto el precio de venta";
+	   			}
+			} catch (IllegalArgumentException e) {
+				redirectAttributes.addFlashAttribute("error", e.getMessage());
+	            redirectAttributes.addFlashAttribute("showModal", true); 
 	            return "redirect:/vacas";
-	        }
-	        return "redirect:/vacas";
+			}
+	    	
+	    	
 	    }
+	    
+	    @GetMapping("/editarVaca/{id}")
+	    public String editarVaca(@PathVariable Long id, Model model) {
+	        Optional<Vaca> vaca = vacaService.findById(id);
+	        if (vaca.isPresent()) {
+	            model.addAttribute("vaca", vaca.get());
+	            model.addAttribute("TodasRazas", razaService.getListRaza());
+	            return "vacas/editarVaca";
+	        } else {
+	            return "redirect:/vacas"; 
+				
+			}
+	       
+	    }
+	       
+	   
 
 	    @PostMapping("/deleteVaca/{id}")
-	    public String deleteVaca (@PathVariable Long id) {
 	    	
-	    	vacaService.deleteById(id);
-
-	    	return "redirect:/vacas";
-	    	
+	    	vacaService.deleteById(id)   	return "redirect:/vacas";
 	    	
 	    	
 	    }
+	    
 	    @GetMapping("/ordenadas")
 	    public String listarVacasOrdenadas(@RequestParam("criterio") String criterio, Model model) {
 	        List<Vaca> vacasOrdenadas = vacaService.obtenerVacasOrdenadas(criterio);
@@ -103,3 +125,4 @@ public class VacaController {
 
 
 }
+  
