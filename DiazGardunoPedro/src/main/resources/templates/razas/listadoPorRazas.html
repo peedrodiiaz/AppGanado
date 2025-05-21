@@ -9,7 +9,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script th:src="@{/js/script.js}" defer></script>
     <style>
         .logo-image {
             border-radius: 50%;
@@ -153,14 +152,14 @@
                             <div class="mb-3">
                                 <label class="form-label">Vendida</label>
                                 <select class="form-select" th:value="vaca.vendida" name="vendida" id="vendida">
-                                    <option  value="true" selected>Vendida</option>
-                                    <option  value="false" selected>No Vendida</option>
+                                    <option  value="true" th:selected="${vaca.vendida == true}">Vendida</option>
+                                    <option  value="false" th:selected="${vaca.vendida == false}">No Vendida</option>
                                 </select>
                             </div>
                             <div class="mb-3" th:if="${vaca.vendida}">
                                 <label class="form-label">Precio de Venta (€)</label>
                                 <input type="number" class="form-control" 
-                                    th:value="${vaca.precioVenta}" name="precioVenta" id="precioVenta" min="1" required step="0.01">
+                                    th:value="${vaca.precioVenta}" name="precioVenta" id="precioVenta"  required step="0.01">
                             </div>
                             <div class="mb-3" th:unless="${vaca.vendida}">
                                 <label class="form-label">Precio de Venta (€)</label>

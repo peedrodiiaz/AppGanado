@@ -32,4 +32,13 @@ public class Raza {
 	@OneToMany (mappedBy = "raza")
 	private List<Vaca>listVacas;
 	
+	public void addVaca(Vaca v) {
+		listVacas.add(v);
+		v.setRaza(this);
+	}
+	
+	public void removeVaca(Vaca v) {
+		listVacas.remove(v);
+		v.setRaza(null);
+	}
 }

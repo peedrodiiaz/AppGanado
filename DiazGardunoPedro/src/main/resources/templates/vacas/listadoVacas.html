@@ -218,7 +218,7 @@
                                         <div class="mb-3" th:if="${vaca.vendida}">
                                             <label class="form-label">Precio de Venta (€)</label>
                                             <input type="number" class="form-control" 
-                                                th:value="${vaca.precioVenta}" name="precioVenta" id="precioVenta" min="1" step="0.01" required>
+                                                th:value="${vaca.precioVenta}" name="precioVenta" id="precioVenta"  step="0.01" required>
                                         </div>
                                         <div class="mb-3" th:unless="${vaca.vendida}">
                                             <label class="form-label">Precio de Venta (€)</label>

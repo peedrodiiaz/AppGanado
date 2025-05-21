@@ -130,7 +130,7 @@
                                 <form th:action="@{/razas/editRaza/{id}(id=${raza.id})}" method="post">
                                     <input type="hidden" name="id" th:value="${raza.id}" />
                                     <div class="mb-3">
-                                        <label th:for="'nombreRaza__' + ${raza.id}" class="form-label"></a>Nombre de la Raza</label>
+                                        <label th:for="'nombreRaza__' + ${raza.id}" class="form-label">Nombre de la Raza</label>
                                         <input type="text" th:id="'nombreRaza__' + ${raza.id}"  name="nombre"th:value="${raza.nombre}" class="form-control" placeholder="Nuevo nombre de la raza" required>
                                     </div>
                                     <div class="modal-footer">
