@@ -59,13 +59,13 @@
                     <div class="card-body">
                         <p class="stat-info">
                             <i class="bi bi-cash-coin me-2"></i>
-                            <strong>Total de ventas:</strong>
-                            <span th:text="${#numbers.formatDecimal(totalVentas, 1, 'COMMA', 2, 'POINT')} + ' €'"></span>
+                            <strong>Total ganancias de ventas:</strong>
+                            <span th:text="${#numbers.formatDecimal(totalVentas, 1,  2, 'POINT')} + ' €'"></span>
                         </p>
                         <p class="stat-info">
                             <i class="bi bi-calendar-check me-2"></i>
-                            <strong>Total de ventas por mes:</strong>
-                            <span th:text="${#numbers.formatDecimal(mediaVentas, 1, 'COMMA', 2, 'POINT')} + ' €'"></span>
+                            <strong>Media de precio por vaca</strong>
+                            <span th:text="${#numbers.formatDecimal(mediaVentas, 1, 2, 'POINT')} + ' €'"></span>
                         </p>
                     </div>
                 </div>
