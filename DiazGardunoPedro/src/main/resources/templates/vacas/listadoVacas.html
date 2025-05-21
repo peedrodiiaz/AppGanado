@@ -135,14 +135,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="vaca : ${TodasVacas}">
+                    <tr  th:each="vaca : ${TodasVacas}">
                     <td th:text="${vaca.numIdentificacion}">1234</td>
                     <td th:text="${vaca.peso} + ' kg'">0 kg</td>
                     <td th:text="${vaca.fechaNacimiento} ?: 'No registrado'">—</td>
                     <td th:text="${vaca.fechaParto} ?: 'Vaca sin parto'">—</td>
                     <td th:text="${vaca.raza.nombre}" >Raza</td>
                     <td>
-                        <span th:if="${vaca.vendida}" class="badge bg-success">Vendida</span>
+                        <span th:if="${vaca.vendida}" class="badge bg-success">  Vendida</span>
                         <span th:if="${!vaca.vendida}" class="badge bg-danger">No Vendida</span>
                     </td>
                     <td>
