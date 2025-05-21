@@ -122,14 +122,16 @@ public class VacaController {
 		
 		 @GetMapping("/estadisticas")
 		    public String mostrarEstadisticas(Model model) {
-		        double totalVentas = vacaService.calcularTotalVentas();
-		        double mediaVentas = vacaService.calcularMediaVentas();
-
+		        double totalVentas, mediaVentas, media;
+		       
 		        List<Raza> razas = razaService.findAll(); 
 		        Map<String, Double> mediaPorRaza = new HashMap<>();
 
+		        totalVentas = vacaService.calcularTotalVentas();
+		        mediaVentas = vacaService.calcularMediaVentas();
+		        
 		        for (Raza raza : razas) {
-		            double media = vacaService.calcularMediaVentasPorRaza(raza.getId());
+		            media = vacaService.calcularMediaVentasPorRaza(raza.getId());
 		            mediaPorRaza.put(raza.getNombre(), media);
 		        }
 
