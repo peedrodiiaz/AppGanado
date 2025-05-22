@@ -162,7 +162,9 @@
                     <td colspan="6" class="text-center">No hay vacas que mostrar.</td>
                     </tr>
                 </tbody>
-                <th:block th:each="vaca : ${TodasVacas}">
+                
+            </table>
+            <th:block th:each="vaca : ${TodasVacas}">
                 <!-- editar vaca -->
                     <div class="modal fade" th:id="'editVacaModal_' + ${vaca.id}" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog">
@@ -235,7 +237,6 @@
                         </div>
                     </div>
                 </th:block>
-            </table>
             
         </div>
     </main>
