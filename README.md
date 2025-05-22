@@ -20,7 +20,7 @@ Este es un proyecto desarrollado en Java con **Spring Boot** como parte del Grad
 ## IMPORTANTE
 - Los números de identificación no es lo mismo que el id, y deben empezar por el número 1000.
 - Los números de identificación no se pueden repetir.
-- Las vacas pueden estar sin parto, y si tiene debe ser con más de 9 meses desde el nacimiento.
+- Las vacas pueden estar sin parto y si tienen debe ser con más de 9 meses desde el nacimiento.
 
 PROYECTO FINALIZADO ✅ 
 
