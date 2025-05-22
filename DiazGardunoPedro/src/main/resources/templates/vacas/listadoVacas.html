@@ -176,7 +176,7 @@
                                         <div class="mb-3">
                                             <label class="form-label">Número de Identificación</label>
                                             <input type="text" class="form-control" 
-                                                th:value="${vaca.numIdentificacion}" name="numIdentificacion" id="numIdentificacion" readonly>
+                                                th:value="${vaca.numIdentificacion}" name="numIdentificacion" id="numIdentificacion"  readonly>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Peso (kg)</label>
@@ -257,7 +257,7 @@
                             <label class="form-label">Número de Identificación</label>
                             <input type="number" class="form-control" 
                                 th:field="*{numIdentificacion}" 
-                                min="1000" required>
+                                min="1000" max="10000" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Peso (kg)</label>

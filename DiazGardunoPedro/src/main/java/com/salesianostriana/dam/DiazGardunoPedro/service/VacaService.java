@@ -41,11 +41,22 @@ public class VacaService extends BaseServiceImpl<Vaca, Long, VacaRepository> {
 	        throw new IllegalArgumentException("La fecha de nacimiento no puede ser posterior a hoy.");
 	    }
 	    
-	    if ( vaca.getFechaParto() != null && vaca.getFechaParto().isBefore(vaca.getFechaNacimiento()) ) {
-	        throw new IllegalArgumentException("La fecha de parto no puede ser posterior a la fecha de nacimiento .");
-	    }
-	    if (ChronoUnit.MONTHS.between(vaca.getFechaNacimiento(), vaca.getFechaParto())< 9) {
-			throw new IllegalArgumentException("La fecha de parto no puede ser menor a 9 meses de la fecha de nacimiento.");
+	    if (vaca.getFechaParto() != null) {
+
+			if ( vaca.getFechaParto().isBefore(vaca.getFechaNacimiento()) || vaca.getFechaParto() == vaca.getFechaNacimiento() ) {
+
+		        throw new IllegalArgumentException("La fecha de parto no puede ser posterior a la fecha de nacimiento o igual.");
+
+		    }
+
+			if (ChronoUnit.MONTHS.between(vaca.getFechaNacimiento(), vaca.getFechaParto())< 9) {
+
+				throw new IllegalArgumentException("La fecha de parto no puede ser menor a 9 meses de la fecha de nacimiento.");
+
+			}
+
+		
+
 		}
 	    
 	    existe = findAll().stream()
@@ -79,21 +90,28 @@ public class VacaService extends BaseServiceImpl<Vaca, Long, VacaRepository> {
 	
 	public Optional<Vaca> putVaca(Vaca v) {
 
-		System.out.println(v);
-		if ( v.getFechaParto().isBefore(v.getFechaNacimiento()) || v.getFechaParto() == v.getFechaNacimiento() ) {
-		        throw new IllegalArgumentException("La fecha de parto no puede ser posterior a la fecha de nacimiento o igual.");
-		        
-		    }
-		if (ChronoUnit.MONTHS.between(v.getFechaNacimiento(), v.getFechaParto())< 9) {
-			throw new IllegalArgumentException("La fecha de parto no puede ser menor a 9 meses de la fecha de nacimiento.");
-		}
-		
+			if (v.getFechaParto() != null) {
+
+				if ( v.getFechaParto().isBefore(v.getFechaNacimiento()) || v.getFechaParto() == v.getFechaNacimiento() ) {
+
+			        throw new IllegalArgumentException("La fecha de parto no puede ser posterior a la fecha de nacimiento o igual.");
+			    }
+				
+				if (ChronoUnit.MONTHS.between(v.getFechaNacimiento(), v.getFechaParto())< 9) {
+
+					throw new IllegalArgumentException("La fecha de parto no puede ser menor a 9 meses de la fecha de nacimiento.");
+				}
+
+			}
+		 
 		if (v.isVendida() && v.getPrecioVenta() <= 0) {
 	        throw new IllegalArgumentException("Has marcado la vaca como vendida, pero no has puesto un precio de venta.");
 	    }
+		
 	    if (!v.isVendida() && v.getPrecioVenta() > 0) {
 	        throw new IllegalArgumentException("Has puesto un precio de venta, pero no has marcado la vaca como vendida.");
 	    }
+	    
 	    if (v.isVendida()) {
 	        if (v.getPrecioVenta() <= 0) {
 	            return Optional.empty(); 
