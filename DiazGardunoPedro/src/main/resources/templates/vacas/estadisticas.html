@@ -73,7 +73,7 @@
         </div>
         <h3 class="mt-5 mb-3 text-success"><i class="bi bi-pie-chart me-2"></i>Media de Ventas por Raza</h3>
         <div class="row">
-            <div class="col-md-4 mb-3" th:each="raza : ${mediaPorRaza}">
+            <div class="col-md-4 mb-3"  th:each="raza : ${mediaPorRaza}" th:if="${raza.key} != 'Raza sin definir'">
                 <div class="card stat-card shadow">
                     <div class="card-body">
                         <h5 class="card-title text-success" th:text="${raza.key}">Nombre de la Raza</h5>
